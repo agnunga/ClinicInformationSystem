@@ -12,8 +12,13 @@
             D:\Envelope\
         </param-value>
     </context-param>
-    <welcome-file-list>  
+<!--    <welcome-file-list>  
         <welcome-file>index.jsp</welcome-file>  
-        <!--<welcome-file>default.html</welcome-file>-->  
-    </welcome-file-list> 
+        <welcome-file>default.html</welcome-file>  
+    </welcome-file-list> -->
+    <servlet>  
+        <servlet-name>start</servlet-name>  
+        <servlet-class>com.agunga.servlets.LoginServlet</servlet-class>  
+        <load-on-startup>0</load-on-startup>  
+    </servlet> 
 </web-app>

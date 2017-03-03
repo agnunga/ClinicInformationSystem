@@ -76,11 +76,13 @@ public class DbUtil {
 
         String insert_person_table = "INSERT INTO "
                 + " persons(nationalid , name,  dob,  phone, sex)"
-                + " VALUES(?,?,?,?,?) ";
+                + " VALUES(?,?,?,?,?) "
+                + " ON DUPLICATE KEY UPDATE nationalid = nationalid";
 
         String insert_employee_table = "INSERT INTO "
                 + " employees(employeeno, nationalid, dateemployed, salary, password, title ) "
-                + " VALUES(?,?,?,?,?,?);";
+                + " VALUES(?,?,?,?,?,?) "
+                + " ON DUPLICATE KEY UPDATE employeeno = employeeno";
         
 //        String create_labtech_table = "";
 //        String create_doctor_table = "";

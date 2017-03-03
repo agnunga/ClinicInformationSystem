@@ -17,5 +17,15 @@ public class MainStart {
         } else {
             System.err.println("Agunga--FAILED to connect to CIS database");
         }
+//        String name = "oloo";
+//        int age = 39;
+//        
+//        Lamb tryLamb = () -> "My name is "+name+" age is "+age;
+//        System.out.println("tryLamb: "+tryLamb);
+        
     }
 }
+
+//interface Lamb{
+//String tryLamb();
+//}
