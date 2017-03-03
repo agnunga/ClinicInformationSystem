@@ -39,8 +39,7 @@ public class LoginServlet extends HttpServlet {
         switch (role[0]) {
             case "r": {
                 session.setAttribute("rsession", role[1]);
-                RequestDispatcher dispatcher = request.getRequestDispatcher("receptionist.jsp");
-                dispatcher.forward(request, response);
+                response.sendRedirect("receptionist");
             }
             case "d": {
                 session.setAttribute("dsession", role[1]);
