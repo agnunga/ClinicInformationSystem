@@ -1,10 +1,8 @@
-package com.agunga.cis;
+package com.agunga.beans;
 
+import com.agunga.dao.DbType;
+import com.agunga.dao.DbUtil;
 
-import com.agunga.db.DbType;
-import com.agunga.db.DbUtil;
-
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
@@ -12,17 +10,16 @@ import java.sql.SQLException;
  * Created by agunga on 1/18/17.
  */
 public class Labtech extends Employee {
-    private static String persons_table = "persons";
-    private static String patients_table = "patients";
-    public static Connection connection = null;
 
-    public void registerLabtech(){
+    private static final String PERSONS_TABLE = "persons";
+    private static final String PATIENTS_TABLE = "patients";
+
+    public void registerLabtech() {
         Labtech labtech = new Labtech();
         registerPerson(labtech);
     }
 
-
-    public void recordTestResults(){
+    public void recordTestResults() {
         connection = DbUtil.connectDB(DbType.MYSQL);
         Patient patient = new Patient();
         System.out.print("Enter PatientDetail's National ID: ");
@@ -34,9 +31,9 @@ public class Labtech extends Employee {
         System.out.print("Enter the PatientDetail's weight: ");
         patient.setWeight(MyUtility.myScanner().next());
 
-        String sql_update = "UPDATE "+patients_table+" " +
-                " SET weight = ?, bloodtype = ? " +
-                " WHERE nationalid = ?";
+        String sql_update = "UPDATE " + PATIENTS_TABLE + " "
+                + " SET weight = ?, bloodtype = ? "
+                + " WHERE nationalid = ?";
 
         PreparedStatement preparedStatement;
         try {
@@ -45,8 +42,11 @@ public class Labtech extends Employee {
             preparedStatement.setString(2, patient.getBlood_type());
             preparedStatement.setString(3, patient.getNationalId());
 
-            if(DbUtil.update(sql_update, preparedStatement)> 0)System.out.println("Test results recorded.");
-            else System.out.println("Failed to record test results.");
+            if (DbUtil.update(sql_update, preparedStatement) > 0) {
+                System.out.println("Test results recorded.");
+            } else {
+                System.out.println("Failed to record test results.");
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();

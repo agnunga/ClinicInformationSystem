@@ -1,4 +1,4 @@
-package com.agunga.servlets;
+package com.agunga.controllers;
 
 import java.io.IOException;
 import java.io.PrintWriter; 
@@ -10,20 +10,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.agunga.cis.Patient; 
-import com.agunga.cis.Receptionist; 
+import com.agunga.beans.Patient;
+import com.agunga.beans.Receptionist; 
 
-@WebServlet("/update_patient")
+@WebServlet("/receptionist/update_patient")
 public class UpdatePatientServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if(request.getParameter("id")!=null){
-			RequestDispatcher rd = request.getRequestDispatcher("updatePatient.jsp");
+			RequestDispatcher rd = request.getRequestDispatcher("/users/rec/updatePatient.jsp");
 			rd.forward(request, response);
 		}else{
 			request.setAttribute("updated", "Invalid Option. No record selected for update");
-			RequestDispatcher rd = request.getRequestDispatcher("viewPatients.jsp");
+			RequestDispatcher rd = request.getRequestDispatcher("/users/rec/viewPatients.jsp");
 			rd.forward(request, response);
 		}
 	}
@@ -43,7 +43,7 @@ public class UpdatePatientServlet extends HttpServlet {
 			out.print("UPDATED");
 			//			response.sendRedirect("view_patients?id="+patient.getNationalId()+"&us=0");
 			request.setAttribute("updated", patient.getName()+" ("+ patient.getNationalId()+") successfully updated.");
-			RequestDispatcher rd = request.getRequestDispatcher("viewPatients.jsp");
+			RequestDispatcher rd = request.getRequestDispatcher("/users/rec/viewPatients.jsp");
 			rd.forward(request, response);
 		}else{
 			out.print("UPDATE FAILED");

@@ -1,4 +1,4 @@
-<form class="well form-horizontal" action="add_patient" method="post"
+<form class="well form-horizontal" action="register_patient" method="post"
 	id="contact_form">
 	<fieldset>
 

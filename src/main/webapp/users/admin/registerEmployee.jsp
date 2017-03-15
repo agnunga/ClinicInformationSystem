@@ -1,3 +1,3 @@
-<%@include file="header_rec.jsp"%>
-<%@include file="registerEmployeeForm.jsp"%>
-<%@include file="footer.jsp"%>
+<jsp:include page="header_admin.jsp"/> 
+<jsp:include page="registerEmployeeForm.jsp"/>
+<jsp:include page="../../assets/footer.jsp"/>

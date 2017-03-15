@@ -1,4 +1,4 @@
-package com.agunga.cis;
+package com.agunga.beans;
 
 
 import java.sql.Connection;
@@ -7,8 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
 
-import com.agunga.db.DbType;
-import com.agunga.db.DbUtil;
+import com.agunga.dao.DbType;
+import com.agunga.dao.DbUtil;
 
 /**
  * Created by agunga on 1/18/17.

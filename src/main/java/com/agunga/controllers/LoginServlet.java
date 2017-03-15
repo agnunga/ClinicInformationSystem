@@ -1,4 +1,4 @@
-package com.agunga.servlets;
+package com.agunga.controllers;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.agunga.cis.Employee;
+import com.agunga.beans.Employee;
 
 @WebServlet("/start")
 public class LoginServlet extends HttpServlet {
@@ -43,23 +43,18 @@ public class LoginServlet extends HttpServlet {
             }
             case "d": {
                 session.setAttribute("dsession", role[1]);
-                RequestDispatcher dispatcher = request.getRequestDispatcher("doctor.jsp");
-                dispatcher.forward(request, response);
+                response.sendRedirect("doctor");
             }
             case "n": {
                 session.setAttribute("nsession", role[1]);
-                RequestDispatcher dispatcher = request.getRequestDispatcher("nurse.jsp");
-                dispatcher.forward(request, response);
+                response.sendRedirect("nurse");
             }
             case "l": {
                 session.setAttribute("lsession", role[1]);
-                RequestDispatcher dispatcher = request.getRequestDispatcher("labtech.jsp");
-                dispatcher.forward(request, response);
+                response.sendRedirect("labtech");
             }
             case "a": {
-                session.setAttribute("asession", role[1]);
-//                RequestDispatcher dispatcher = request.getRequestDispatcher("admin.jsp");
-//                dispatcher.forward(request, response);
+                session.setAttribute("asession", role[1]); 
                 response.sendRedirect("admin");
             }
             default: {

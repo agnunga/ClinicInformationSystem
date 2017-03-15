@@ -1,6 +1,6 @@
-package com.agunga.db;
+package com.agunga.dao;
 
-import com.agunga.cis.MyUtility;
+import com.agunga.beans.MyUtility;
 
 import java.sql.*;
 import java.util.logging.Level;

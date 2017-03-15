@@ -1,12 +1,13 @@
-package com.agunga.cis;
+package com.agunga.beans;
 
-import com.agunga.db.DbType;
-import com.agunga.db.DbUtil;
+import com.agunga.dao.DbType;
+import com.agunga.dao.DbUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  * Created by agunga on 1/18/17.
@@ -18,7 +19,7 @@ abstract public class Employee extends Person {
     private String salary;
     private String title;
 
-    private static Connection connection = null;
+    public static Connection connection = null;
 
     public String getEmployeeNo() {
         return employeeNo;
@@ -113,7 +114,6 @@ abstract public class Employee extends Person {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-
         }
         return added;
     }

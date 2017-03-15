@@ -4,10 +4,10 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-        <title>Insert title here</title>
+        <title>CIS</title>
     </head>
     <meta charset="UTF-8">
-    <title>Bootstrap 3 Contact form with Validation</title>
+    <title>CIS</title>
     <script src="http://s.codepen.io/assets/libs/modernizr.js"
     type="text/javascript"></script>
 
@@ -31,7 +31,7 @@
         <div class="navbar navbar-fixed-top navbar-default">
             <div class="container">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="#">Clinic Information System</a><a
+                    <a class="navbar-brand" href="/ClinicInformationSystem/">Clinic Information System</a><a
                         class="navbar-toggle" data-toggle="collapse"
                         data-target=".navbar-collapse"> <span
                             class="glyphicon glyphicon-bar"></span> <span

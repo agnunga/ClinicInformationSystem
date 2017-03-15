@@ -1,10 +1,7 @@
-<%@include file="header_rec.jsp"%>
+<jsp:include page="header_rec.jsp"/>
 <div class="col-md-8">
-	<div class="container">
-
-		<%@include file="registerPatientForm.jsp"%>
-
-	</div>
+    <div class="container">
+        <%@include file="registerPatientForm.jsp"%>
+    </div>
 </div>
-<%@include file="header.jsp"%>
-<%@include file="footer.jsp"%>
+<jsp:include page="../../assets/footer.jsp"/>

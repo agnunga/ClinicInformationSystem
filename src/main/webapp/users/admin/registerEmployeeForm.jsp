@@ -115,17 +115,17 @@
 
 		<hr />
 
-		<div class="form-group">
-			<label class="col-md-4 control-label">Assignment: </label>
-			<div class="col-md-4 inputGroupContainer">
-				<div class="input-group">
-					<span class="input-group-addon"><i
-						class="glyphicon glyphicon-user"></i></span> <input name="assignment"
-						placeholder="Office assigned" class="form-control" type="text"
-						required>
-				</div>
-			</div>
-		</div>
+                <!--		<div class="form-group">
+                                        <label class="col-md-4 control-label">Assignment: </label>
+                                        <div class="col-md-4 inputGroupContainer">
+                                                <div class="input-group">
+                                                        <span class="input-group-addon"><i
+                                                                class="glyphicon glyphicon-user"></i></span> <input name="assignment"
+                                                                placeholder="Office assigned" class="form-control" type="text"
+                                                                required>
+                                                </div>
+                                        </div>
+                                </div>-->
 		<!-- Button -->
 		<div class="form-group">
 			<label class="col-md-4 control-label"></label>

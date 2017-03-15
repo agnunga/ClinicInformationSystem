@@ -4,15 +4,12 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-        <title>Insert title here</title>
+        <title>CIS</title>
     </head>
     <meta charset="UTF-8">
     <title>Admin | CIS</title>
     <script src="http://s.codepen.io/assets/libs/modernizr.js"
     type="text/javascript"></script>
-
-
-
     <link rel='stylesheet prefetch'
           href='http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css'>
     <link rel='stylesheet prefetch'
@@ -24,14 +21,12 @@
     <link rel="stylesheet" href="/datatables/dataTables.bootstrap.css">
     <!-- Content Wrapper. Contains page content -->
 </head>
-
 <body>
     <div class="container">
-
         <div class="navbar navbar-fixed-top navbar-default">
             <div class="container">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="#">Clinic Information System</a><a
+                    <a class="navbar-brand" href="/ClinicInformationSystem/">Clinic Information System</a><a
                         class="navbar-toggle" data-toggle="collapse"
                         data-target=".navbar-collapse"> <span
                             class="glyphicon glyphicon-bar"></span> <span
@@ -43,9 +38,8 @@
                     <ul class="nav navbar-nav">
                         <li class=""><a href="register_employee">Add Employee</a></li>
                         <li class=""><a href="view_employees">View Employees</a></li>
-                        <li class=""><a href="man_employees">Batch Employees Manipulation</a></li>
+                        <li class=""><a href="">Howdy! ${sessionScope.asession}</a></li>
                     </ul>
-
                 </div>
                 <!--/.navbar-collapse -->
             </div>

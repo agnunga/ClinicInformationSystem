@@ -1,4 +1,4 @@
-package com.agunga.cis;
+package com.agunga.beans;
 
 
 import java.io.*;

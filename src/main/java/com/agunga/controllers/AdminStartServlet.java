@@ -1,4 +1,4 @@
-package com.agunga.servlets;
+package com.agunga.controllers;
 
 import java.io.IOException;
 
@@ -15,13 +15,15 @@ public class AdminStartServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
 
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(false);
         if (session != null && !session.isNew() && session.getAttribute("asession")!=null) {
-            RequestDispatcher dispatcher = request.getRequestDispatcher("admin.jsp");
+   
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/users/admin/admin.jsp");
             dispatcher.forward(request, response);
         } else {
-            RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/index.jsp");
             dispatcher.forward(request, response);
         }
     }

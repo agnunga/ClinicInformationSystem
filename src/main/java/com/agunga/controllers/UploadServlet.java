@@ -1,4 +1,4 @@
-package com.agunga.servlets;
+package com.agunga.controllers;
 
 import java.io.File;
 import java.io.IOException;
@@ -8,6 +8,7 @@ import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -17,6 +18,7 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 @WebServlet("/upload_file")
+@MultipartConfig(fileSizeThreshold = 1024 * 1024, location = "/temp", maxFileSize = 5 * 1024 * 1024, maxRequestSize = 5 * 5 * 1024 * 1024)
 public class UploadServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
@@ -34,7 +36,7 @@ public class UploadServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("uploadFile.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/users/uploadFile.jsp");
         dispatcher.forward(request, response);
     }
 

@@ -1,4 +1,4 @@
-package com.agunga.db;
+package com.agunga.dao;
 
 /**
  * Created by agunga on 2/2/2017.

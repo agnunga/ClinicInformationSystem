@@ -1,8 +1,8 @@
-package com.agunga.cis;
+package com.agunga.beans;
 
 
-import com.agunga.db.DbType;
-import com.agunga.db.DbUtil;
+import com.agunga.dao.DbType;
+import com.agunga.dao.DbUtil;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
