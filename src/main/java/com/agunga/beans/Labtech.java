@@ -1,7 +1,7 @@
 package com.agunga.beans;
 
-import com.agunga.dao.DbType;
-import com.agunga.dao.DbUtil;
+import com.agunga.dao.MysqlDbUtil;
+import java.sql.Connection;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -14,13 +14,12 @@ public class Labtech extends Employee {
     private static final String PERSONS_TABLE = "persons";
     private static final String PATIENTS_TABLE = "patients";
 
-    public void registerLabtech() {
+    public void registerLabtech(Connection conn) {
         Labtech labtech = new Labtech();
-        registerPerson(labtech);
+        registerPerson(labtech, conn);
     }
 
-    public void recordTestResults() {
-        connection = DbUtil.connectDB(DbType.MYSQL);
+    public void recordTestResults(Connection conn) {
         Patient patient = new Patient();
         System.out.print("Enter PatientDetail's National ID: ");
         patient.setNationalId(MyUtility.myScanner().next());
@@ -37,12 +36,12 @@ public class Labtech extends Employee {
 
         PreparedStatement preparedStatement;
         try {
-            preparedStatement = connection.prepareStatement(sql_update);
+            preparedStatement = conn.prepareStatement(sql_update);
             preparedStatement.setString(1, patient.getWeight());
             preparedStatement.setString(2, patient.getBlood_type());
             preparedStatement.setString(3, patient.getNationalId());
 
-            if (DbUtil.update(sql_update, preparedStatement) > 0) {
+            if (new MysqlDbUtil().update(sql_update, preparedStatement, conn) > 0) {
                 System.out.println("Test results recorded.");
             } else {
                 System.out.println("Failed to record test results.");

@@ -1,8 +1,5 @@
 package com.agunga.beans;
 
-import static com.agunga.beans.Employee.connection;
-import com.agunga.dao.DbType;
-import com.agunga.dao.DbUtil;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,8 +9,6 @@ import java.util.ArrayList;
  * Created by agunga on 1/18/17.
  */
 public class Administrator extends Employee {
-
-    public static Connection connection = null;
 
     private String adminId;
 
@@ -25,15 +20,14 @@ public class Administrator extends Employee {
 
     }
 
-    public ArrayList<Employee> viewEmployees() {
-        connection = DbUtil.connectDB(DbType.MYSQL);
+    public ArrayList<Employee> viewEmployees(Connection conn) {
         ArrayList<Employee> employees = new ArrayList<>();
 
         String sql = "SELECT employees.nationalid, employeeno, title, dateemployed, "
                 + " name, dob, phone, sex "
                 + " FROM employees INNER JOIN persons"
                 + " WHERE employees.nationalid = persons.nationalid;";
-        ResultSet resultSet = DbUtil.select(sql);
+        ResultSet resultSet = mcon.select(sql, conn);
         try {
             while (resultSet.next()) {
                 Administrator e = new Administrator();
@@ -50,14 +44,12 @@ public class Administrator extends Employee {
                 employees.add(e);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("Error: " + e.getMessage());
         }
         return employees;
     }
 
     @Override
     void work() {
-        // TODO Auto-generated method stub
-
     }
 }

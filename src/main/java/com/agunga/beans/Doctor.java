@@ -1,8 +1,6 @@
 package com.agunga.beans;
 
-
-import com.agunga.dao.DbType;
-import com.agunga.dao.DbUtil;
+import com.agunga.dao.MysqlDbUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,6 +10,7 @@ import java.sql.SQLException;
  * Created by agunga on 1/18/17.
  */
 public class Doctor extends Employee {
+
     private static String persons_table = "persons";
     private static String patients_table = "patients";
 
@@ -37,16 +36,14 @@ public class Doctor extends Employee {
 
     @Override
     void work() {
-        recordDiagnosis();
     }
 
-    public void recordDiagnosis(){
-        connection = DbUtil.connectDB(DbType.MYSQL);
+    public void recordDiagnosis(Connection conn) {
         Patient patient = new Patient();
-        
-        String sql_update = "UPDATE "+patients_table+" " +
-                " SET diagnosis = ? " +
-                " WHERE nationalid = ?";
+
+        String sql_update = "UPDATE " + patients_table + " "
+                + " SET diagnosis = ? "
+                + " WHERE nationalid = ?";
 
         PreparedStatement preparedStatement;
         try {
@@ -54,16 +51,19 @@ public class Doctor extends Employee {
             preparedStatement.setString(1, patient.getDiagnosis());
             preparedStatement.setString(2, patient.getNationalId());
 
-            if(DbUtil.update(sql_update, preparedStatement)>0)System.out.println("Diagnosis recorded.");
-            else System.out.println("Failed to record diagnosis.");
+            if (new MysqlDbUtil().update(sql_update, preparedStatement, conn) > 0) {
+                System.out.println("Diagnosis recorded.");
+            } else {
+                System.out.println("Failed to record diagnosis.");
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public void recordPrescription(){
-        connection = DbUtil.connectDB(DbType.MYSQL);
+    public void recordPrescription(Connection conn) {
+        connection = new MysqlDbUtil().connectDB();
         Patient patient = new Patient();
         System.out.print("Enter patient's National ID: ");
         patient.setNationalId(MyUtility.myScanner().next());
@@ -71,9 +71,9 @@ public class Doctor extends Employee {
         System.out.print("Enter the patient's prescription: ");
         patient.setDiagnosis(MyUtility.myScanner().nextLine());
 
-        String sql_update = "UPDATE "+patients_table+" " +
-                " SET prescription = ? " +
-                " WHERE nationalid = ?";
+        String sql_update = "UPDATE " + patients_table + " "
+                + " SET prescription = ? "
+                + " WHERE nationalid = ?";
 
         PreparedStatement preparedStatement;
         try {
@@ -81,16 +81,18 @@ public class Doctor extends Employee {
             preparedStatement.setString(1, patient.getDiagnosis());
             preparedStatement.setString(2, patient.getNationalId());
 
-            if(DbUtil.update(sql_update, preparedStatement)>0)System.out.println("Prescription recorded.");
-            else System.out.println("Failed to record prescription.");
+            if (new MysqlDbUtil().update(sql_update, preparedStatement, conn) > 0) {
+                System.out.println("Prescription recorded.");
+            } else {
+                System.out.println("Failed to record prescription.");
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-
-    public void createEmployeeTable(){
+    public void createEmployeeTable() {
 //        String sql_create_table = "create table "+table_name
 //                + "( "
 //                + "id NUMBER(11) NOT NULL, "
@@ -100,11 +102,11 @@ public class Doctor extends Employee {
 //                + "title VARCHAR2(30) NOT NULL "//
 //                + ") ";
 //
-//        DbUtil.createTable(sql_create_table, table_name);
+//        MysqlDbUtil.createTable(sql_create_table, table_name);
 
     }
 
-    public void addEmployee(){
+    public void addEmployee() {
 
 //        String sql_insert = "INSERT INTO "+table_name
 //                + " (emp_no, date_employed, salary, title ) "
@@ -119,19 +121,18 @@ public class Doctor extends Employee {
 ////            preparedStatement.setString(4, employee.getSalary());
 ////            preparedStatement.setString(5, employee.getTitle());
 //
-//            if(DbUtil.insert(preparedStatement) >= 0)System.out.println("Employee added.");
+//            if(MysqlDbUtil.insert(preparedStatement) >= 0)System.out.println("Employee added.");
 //            else System.out.println("Failed to add employee.");
 //
 //        } catch (SQLException e) {
 //            e.printStackTrace();
 //        }
-
     }
 
-    public void viewEmployee(){
+    public void viewEmployee() {
 //        String sql_select = "SELECT id, emp_no, date_employed, salary, title "
 //                + " FROM "+table_name;
-//        ResultSet resultSet = DbUtil.select(sql_select);
+//        ResultSet resultSet  = new MysqlDbUtil().select(sql_select);
 //
 //        try {
 //
@@ -149,7 +150,7 @@ public class Doctor extends Employee {
 //        }
     }
 
-    public void updateEmployee(){
+    public void updateEmployee() {
 //        String sql_update = "UPDATE "+table_name+" SET emp_no = ?, date_employed = ?, salary = ?, title= ? WHERE id = ?";
 //
 //        System.out.println("Details Before Updating.");
@@ -166,7 +167,7 @@ public class Doctor extends Employee {
 //            preparedStatement.setString(4, "Software Engineer XXX");
 //            preparedStatement.setInt(5, id);
 //
-//            if(DbUtil.update(sql_update, preparedStatement))System.out.println("Employee deleted.");
+//            if(MysqlDbUtil.update(sql_update, preparedStatement))System.out.println("Employee deleted.");
 //            else System.out.println("Failed to delete employee.");
 //
 //        } catch (SQLException e) {
@@ -176,7 +177,7 @@ public class Doctor extends Employee {
 //        viewEmployee();
     }
 
-    public void deleteEmployee(){
+    public void deleteEmployee() {
 
 //        System.out.println("Details Before Deleting.");
 //        viewEmployee();
@@ -185,12 +186,11 @@ public class Doctor extends Employee {
 //        System.out.print("Enter id of column you want to delete: ");
 //        int id  = MyUtility.myScanner().nextInt();
 //
-//        if(DbUtil.delete(sql_delete, id))System.out.println("Employee deleted.");
+//        if(MysqlDbUtil.delete(sql_delete, id))System.out.println("Employee deleted.");
 //        else System.out.println("Failed to delete employee.");
 //
 //        System.out.println("Details After Deleting.");
 //        viewEmployee();
-
     }
 
 }

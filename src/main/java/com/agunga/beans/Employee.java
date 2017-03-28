@@ -1,13 +1,9 @@
 package com.agunga.beans;
 
-import com.agunga.dao.DbType;
-import com.agunga.dao.DbUtil;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 /**
  * Created by agunga on 1/18/17.
@@ -18,8 +14,6 @@ abstract public class Employee extends Person {
     private String dateEmployed;
     private String salary;
     private String title;
-
-    public static Connection connection = null;
 
     public String getEmployeeNo() {
         return employeeNo;
@@ -55,7 +49,7 @@ abstract public class Employee extends Person {
 
     abstract void work();
 
-    public void createEployeeTable() {
+    public void createEployeeTable(Connection conn) {
         String sql = "create table employees(id int(11) AUTO_INCREMENT PRIMARY KEY, "
                 + " nationalid int(8) NOT NULL, "
                 + " employeeno varchar(15) NOT NULL, "
@@ -63,17 +57,16 @@ abstract public class Employee extends Person {
                 + " title varchar(255), "
                 + " password varchar(255));";
 
-        DbUtil.createTable(sql, "employees");
+        mcon.createTable(sql, "employees", conn);
     }
 
-    public boolean checkEmployee(Employee employee) {
-        connection = DbUtil.connectDB(DbType.MYSQL);
+    public boolean checkEmployee(Employee employee, Connection conn) {
 
         boolean exists = false;
         String sql = "SELECT employeeno "
                 + " FROM employees "
                 + " WHERE nationalid = " + employee.getNationalId() + ";";
-        ResultSet resultSet = DbUtil.select(sql);
+        ResultSet resultSet = mcon.select(sql, conn);
         try {
             while (resultSet.next()) {
                 exists = true;
@@ -85,11 +78,10 @@ abstract public class Employee extends Person {
         return exists;
     }
 
-    public boolean registerEmployee(Employee employee) {
+    public boolean registerEmployee(Employee employee, Connection conn) {
         boolean added = false;
-        connection = DbUtil.connectDB(DbType.MYSQL);
-        super.registerPerson(employee);
-        if (checkEmployee(employee)) {
+        super.registerPerson(employee, conn);
+        if (checkEmployee(employee, conn)) {
             System.out.print("Employee Exists. ");
         } else {
             String sql = "INSERT INTO employees "
@@ -97,7 +89,7 @@ abstract public class Employee extends Person {
                     + " VALUES(?, ?, ?, ?, ?, ?)";
 
             try {
-                PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                PreparedStatement preparedStatement = conn.prepareStatement(sql);
                 preparedStatement.setString(1, employee.getNationalId());
                 preparedStatement.setString(2, employee.getEmployeeNo());
                 preparedStatement.setString(3, employee.getDateEmployed());
@@ -105,7 +97,7 @@ abstract public class Employee extends Person {
                 preparedStatement.setString(5, employee.getTitle());
                 preparedStatement.setString(6, employee.getNationalId());
 
-                if (DbUtil.insert(preparedStatement) > 0) {
+                if (mcon.insert(preparedStatement, conn) > 0) {
                     added = true;
                     System.out.print("Employee registered. ");
                 } else {
@@ -118,15 +110,13 @@ abstract public class Employee extends Person {
         return added;
     }
 
-    public static String[] logIn(String employeeno, String password) {
-        connection = DbUtil.connectDB(DbType.MYSQL);
-
+    public String[] logIn(String employeeno, String password, Connection con) {
         String[] role = {"", ""};
         String sql = "SELECT title,  employeeno"
                 + " FROM employees "
                 + " WHERE employeeno = '" + employeeno + "' AND password = '" + password + "' "
                 + "";
-        ResultSet resultSet = DbUtil.select(sql);
+        ResultSet resultSet = mcon.select(sql, con);
         try {
             if (resultSet.next()) {
                 role[0] = (resultSet.getString(1));

@@ -1,3 +1,4 @@
+<%@page import="java.sql.Connection"%>
 <%@page import="com.agunga.beans.Patient"%>
 <%@page import="com.agunga.beans.Receptionist"%>
 <%@page import="java.util.Iterator"%>
@@ -7,7 +8,7 @@
         <!-- Form Name -->
         <legend>Update Patient Details</legend>
         <%
-            Patient patient = new Receptionist().viewSinglePatientDetails(request.getParameter("id"));
+            Patient patient = new Receptionist().viewSinglePatientDetails(request.getParameter("id"), (Connection) request.getAttribute("mycon"));
         %>
         <div class="form-group">
             <label class="col-md-4 control-label">Patient ID: </label>

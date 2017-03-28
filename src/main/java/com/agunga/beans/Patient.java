@@ -1,8 +1,8 @@
 package com.agunga.beans;
 
 
-import com.agunga.dao.DbType;
-import com.agunga.dao.DbUtil;
+
+import com.agunga.dao.MysqlDbUtil;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -151,7 +151,7 @@ public class Patient extends Person {
         setDrugs(MyUtility.myScanner().nextLine());
     }
 
-    public boolean patientExists(String nationalId){
+    public boolean patientExists(String nationalId,  Connection conn){
         boolean exists= false;
         String sql_select = "SELECT " +
                 " patients.nationalid, patients.patientid, persons.name, patients.checkin " +
@@ -159,8 +159,7 @@ public class Patient extends Person {
                 " ON patients.nationalid = persons.nationalid" +
                 " WHERE patients.nationalid = "+nationalId+" ORDER BY patients.checkin DESC LIMIT 1";
 
-        connection = DbUtil.connectDB(DbType.MYSQL);
-        ResultSet resultSet = DbUtil.select(sql_select);
+        ResultSet resultSet  = mcon.select(sql_select, conn);
         try {
             while(resultSet.next()){
                 exists = true;

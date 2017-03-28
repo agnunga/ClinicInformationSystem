@@ -23,7 +23,7 @@
 </head>
 <body>
     <div class="container">
-        <div class="navbar navbar-fixed-top navbar-default">
+        <div class="navbar navbar navbar-default">
             <div class="container">
                 <div class="navbar-header">
                     <a class="navbar-brand" href="/ClinicInformationSystem/">Clinic Information System</a><a
@@ -36,8 +36,8 @@
                 </div>
                 <div class="navbar-collapse">
                     <ul class="nav navbar-nav">
-                        <li class=""><a href="register_employee">Add Employee</a></li>
-                        <li class=""><a href="view_employees">View Employees</a></li>
+                        <li class=""><a href="/ClinicInformationSystem/admin/register_employee">Add Employee</a></li>
+                        <li class=""><a href="/ClinicInformationSystem/admin/view_employees">View Employees</a></li>
                         <li class=""><a href="">Howdy! ${sessionScope.asession}</a></li>
                     </ul>
                 </div>

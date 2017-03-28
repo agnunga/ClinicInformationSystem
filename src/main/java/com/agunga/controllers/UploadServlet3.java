@@ -9,6 +9,7 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.RequestDispatcher;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -23,6 +24,10 @@ import javax.servlet.http.Part;
 @MultipartConfig
 public class UploadServlet3 extends HttpServlet {
 
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.getRequestDispatcher("/uploadFile3.jsp").forward(req, resp);
+    }
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         processRequest(req, resp);
@@ -42,14 +47,14 @@ public class UploadServlet3 extends HttpServlet {
         final PrintWriter writer = response.getWriter();
         try {
             out = new FileOutputStream(new File(path + File.separator + fileName));
-//            filecontent = filePart.getInputStream();
-            filecontent = getServletContext().getResourceAsStream("/IMAGES/image.jpg");
+            filecontent = filePart.getInputStream();
             int read;
             final byte[] bytes = new byte[1024];
             while ((read = filecontent.read(bytes)) != -1) {
                 out.write(bytes, 0, read);
             }
             writer.println("New file " + fileName + " created at " + path);
+            writer.println("<img src = \" " + fileName + "\" >");
             LOGGER.log(Level.INFO, "File{0}being uploaded to {1}", new Object[]{fileName, path});
         } catch (FileNotFoundException fne) {
             writer.println("You either did not specify a file to upload or are "

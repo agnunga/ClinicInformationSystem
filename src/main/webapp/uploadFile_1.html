@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html lang="en">
+    <head>
+        <title>File Upload</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script type="text/javascript">
+        	document.writeln("Harro ward!!!");
+        	function registerAlien(){
+        		var alienName = document.getElementById("name").value;
+        		var alienAge = document.getElementById("age").value;
+        		var alienOrigin = document.getElementById("origin").value;
+        		var alienGender = document.getElementById("gender").value;
+        		var alienTimezone = document.getElementById("timezone").value;
+        		alert("N"+alienName+" "+alienAge+" "+alienOrigin+" "+alienGender+" "+alienTimezone);
+        	}
+        	function trial(){
+        		var num = document.getElementById("number").value;
+        		alert("You entered! "+num);
+        		if(confirm("Are you sure???")){
+					prompt("Better value:: ");
+
+        		}else{
+        			alert("You rejected!");
+        		}
+        	}
+        	//onblur="trial()"
+        	function trialKeyUp(){
+        		var num = document.getElementById("number").value;
+        		document.getElementById("response").innerHtml = "The input is: " + num;
+        	}
+        </script>
+    </head>
+    <body>
+        <form method="POST" action="#" enctype="multipart/form-data" > 
+            oloo :
+            <input type="text" name="number" id="number" onkeypress="trialKeyUp()" />
+            </br>
+            <input type="submit" value="Make" name="make" id="make" />
+        </form> 
+    	<div class="response">	
+
+    	</div>
+
+        <form method="POST" action="#" enctype="multipart/form-data" > 
+            Name :<br/>
+            <input type="text" name="name" id="name" />
+            </br>
+            Age :<br/>
+            <input type="text" name="age" id="age" />
+            </br>
+            Country :<br/>
+            <input type="text" name="origin" id="origin" />
+            </br>
+            Country :<br/>
+            <input type="text" name="timezone" id="timezone" />
+            </br>
+            Gender :<br/>
+            <input type="text" name="gender" id="gender" />
+            </br>
+            <input type="submit" value="Submit" name="submit" id="submit" onclick="registerAlien()" />
+        </form> 
+
+    </body>
+</html>

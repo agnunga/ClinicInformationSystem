@@ -22,7 +22,7 @@
 </head>
 <body>
     <div class="container">
-        <div class="navbar navbar-fixed-top navbar-default">
+        <div class="navbar navbar navbar-default">
             <div class="container">
                 <div class="navbar-header">
                     <a class="navbar-brand" href="/ClinicInformationSystem/">Clinic Information System</a><a

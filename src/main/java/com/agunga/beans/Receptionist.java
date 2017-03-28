@@ -1,8 +1,5 @@
 package com.agunga.beans;
 
-import com.agunga.dao.DbType;
-import com.agunga.dao.DbUtil;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,9 +11,7 @@ import java.util.ArrayList;
  */
 public class Receptionist extends Employee {
 
-    private static String persons_table = "persons";
-    public static Connection connection = null;
-
+    private static final String PERSONS_TABLE = "persons";
     private String assignment;
 
     public String getAssignment() {
@@ -27,13 +22,13 @@ public class Receptionist extends Employee {
         this.assignment = assignment;
     }
 
-    public boolean checkReceptionist(Receptionist receptionist) {
-        connection = DbUtil.connectDB(DbType.MYSQL);
+    public boolean checkReceptionist(Receptionist receptionist, Connection conn) {
+
         boolean exists = false;
         String sql = "SELECT employeeno, assignment "
                 + " FROM receptionists "
                 + " WHERE employeeno = '" + receptionist.getEmployeeNo() + "'";
-        ResultSet resultSet = DbUtil.select(sql);
+        ResultSet resultSet = mcon.select(sql, conn);
         try {
             while (resultSet.next()) {
                 exists = true;
@@ -41,40 +36,38 @@ public class Receptionist extends Employee {
                 receptionist.setAssignment(resultSet.getString(2));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("Error " + e.getMessage());
         }
         return exists;
     }
 
-    public void registerReceptionist(Receptionist receptionist) {
-        connection = DbUtil.connectDB(DbType.MYSQL);
-        registerEmployee(receptionist);
-        if (checkReceptionist(receptionist)) {
+    public void registerReceptionist(Receptionist receptionist, Connection conn) {
+        registerEmployee(receptionist, conn);
+        if (checkReceptionist(receptionist, conn)) {
 
         } else {
             String sql = "INSERT INTO receptionists "
                     + " (employeeno, assignment, dateassigned) "
                     + " VALUES(?, ?, CURRENT_TIMESTAMP )";
             try {
-                PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                PreparedStatement preparedStatement = conn.prepareStatement(sql);
                 preparedStatement.setString(1, receptionist.getEmployeeNo());
                 preparedStatement.setString(2, receptionist.getAssignment());
-                if (DbUtil.insert(preparedStatement) > 0) {
+                if (mcon.insert(preparedStatement, conn) > 0) {
                 } else {
                     System.err.print("Failed to add receptionist. ");
                 }
             } catch (SQLException e) {
-                e.printStackTrace();
+                System.out.println("Error " + e.getMessage());
             }
         }
     }
 
-    public boolean registerPatient(Patient patient) {
+    public boolean registerPatient(Patient patient, Connection conn) {
         boolean registered = false;
-        connection = DbUtil.connectDB(DbType.MYSQL);
-        registerPerson(patient);
+        registerPerson(patient, conn);
 
-        if (patient.patientExists(patient.getNationalId())) {
+        if (patient.patientExists(patient.getNationalId(), conn)) {
         } else {
         }
 
@@ -85,31 +78,23 @@ public class Receptionist extends Employee {
 
         PreparedStatement preparedStatement;
         try {
-            preparedStatement = connection.prepareStatement(sql_insert_patient);
+            preparedStatement = conn.prepareStatement(sql_insert_patient);
             preparedStatement.setString(1, patient.getNationalId());
             preparedStatement.setString(2, patient.getPatientId());
             preparedStatement.setString(3, "RF4525");
 
-            if (DbUtil.insert(preparedStatement) > 0) {
+            if (mcon.insert(preparedStatement, conn) > 0) {
                 registered = true;
             } else {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
+            System.out.println("Error " + e.getMessage());
         }
         return registered;
     }
 
-    public Patient viewSinglePatientDetails(String id) {
+    public Patient viewSinglePatientDetails(String id, Connection conn) {
         Patient patient = new Patient();
         String sql_select = "SELECT "
                 + " person.nationalid, patient.patientid, person.name, person.phone, person.dob, person.sex, "
@@ -119,8 +104,7 @@ public class Receptionist extends Employee {
                 + " AND patient.nationalid = " + id + " "
                 + " ORDER BY patient.checkin DESC LIMIT 1 ";
 
-        connection = DbUtil.connectDB(DbType.MYSQL);
-        ResultSet resultSet = DbUtil.select(sql_select);
+        ResultSet resultSet = mcon.select(sql_select, conn);
 
         try {
             if (resultSet.next()) {
@@ -135,27 +119,19 @@ public class Receptionist extends Employee {
                 String addedBy = (resultSet.getString(9));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (resultSet != null) {
-                try {
-                    resultSet.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
+            System.out.println("Error " + e.getMessage());
         }
         return patient;
     }
 
-    public ArrayList<Patient> viewPatientsDetails() {
+    public ArrayList<Patient> viewPatientsDetails(Connection conn) {
+
+        if (mcon != null) {
+            System.out.println("IN viewPatientsDetails SUCCESS");
+        } else {
+            System.out.println("IN viewPatientsDetails NULL XXXX");
+
+        }
         ArrayList<Patient> patients = new ArrayList<>();
         String sql_select = "SELECT "
                 + " id, "
@@ -165,8 +141,7 @@ public class Receptionist extends Employee {
                 + " WHERE patients.nationalid = persons.nationalid ;";
 //                + " ORDER BY patient.checkin DESC LIMIT 500 ";
 
-        connection = DbUtil.connectDB(DbType.MYSQL);
-        ResultSet resultSet = DbUtil.select(sql_select);
+        ResultSet resultSet = mcon.select(sql_select, conn);
 
         try {
             while (resultSet.next()) {
@@ -185,33 +160,49 @@ public class Receptionist extends Employee {
                 patients.add(patient);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("Error " + e.getMessage());
         }
         return patients;
     }
 
-    public boolean updatePatintDetails(Patient patient) {
-        connection = DbUtil.connectDB(DbType.MYSQL);
+    public boolean updatePatintDetails(Patient patient, Connection conn) {
         boolean isUpdated = false;
-        String sql_update = "UPDATE " + persons_table + " "
+        String sql_update = "UPDATE " + PERSONS_TABLE + " "
                 + " SET name = ?, dob = ?, phone = ?, sex= ? "
                 + " WHERE nationalid = ?";
 
         PreparedStatement preparedStatement;
         try {
-            preparedStatement = connection.prepareStatement(sql_update);
+            preparedStatement = conn.prepareStatement(sql_update);
             preparedStatement.setString(1, patient.getName());
             preparedStatement.setString(2, patient.getDob());
             preparedStatement.setString(3, patient.getPhone());
             preparedStatement.setString(4, patient.getSex());
             preparedStatement.setString(5, patient.getNationalId());
 
-            isUpdated = (DbUtil.update(sql_update, preparedStatement) >= 0);
+            isUpdated = (mcon.update(sql_update, preparedStatement, conn) >= 0);
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("Error " + e.getMessage());
         }
         return isUpdated;
+    }
+
+    public boolean deletePatientDetails(Patient patient, int id, Connection conn) {
+        boolean isDeleted = false;
+        String sql_update = "DELETE FROM " + PERSONS_TABLE + " "
+                + " WHERE id = ?";
+
+        PreparedStatement preparedStatement;
+        try {
+            preparedStatement = conn.prepareStatement(sql_update);
+            preparedStatement.setInt(1, id);
+
+            isDeleted = (mcon.update(sql_update, preparedStatement, conn) >= 0);
+        } catch (SQLException e) {
+            System.out.println("Error " + e.getMessage());
+        }
+        return isDeleted;
     }
 
     @Override

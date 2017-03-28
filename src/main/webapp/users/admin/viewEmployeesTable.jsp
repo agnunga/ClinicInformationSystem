@@ -1,3 +1,4 @@
+<%@page import="java.sql.Connection"%>
 <%@page import="com.agunga.beans.Employee"%>
 <%@page import="com.agunga.beans.Administrator"%>
 <%@page import="java.util.Iterator"%>
@@ -18,7 +19,7 @@
             </thead>
             <tbody>
                 <%
-                    Iterator<Employee> iterator = new Administrator().viewEmployees().iterator();
+                    Iterator<Employee> iterator = new Administrator().viewEmployees((Connection)request.getAttribute("mycon")).iterator();
                     while (iterator.hasNext()) {
                         Employee e = iterator.next();
                 %>

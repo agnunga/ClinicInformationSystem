@@ -1,8 +1,8 @@
 package com.agunga.beans;
 
 
-import com.agunga.dao.DbType;
-import com.agunga.dao.DbUtil;
+
+import com.agunga.dao.MysqlDbUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -21,8 +21,7 @@ public class Nurse extends Employee {
 
     }
 
-    public void dispatchDrugs(){
-        connection = DbUtil.connectDB(DbType.MYSQL);
+    public void dispatchDrugs(Connection conn){
         Patient patient = new Patient();
         System.out.print("Enter patient's National ID: ");
         patient.setNationalId(MyUtility.myScanner().next());
@@ -36,11 +35,11 @@ public class Nurse extends Employee {
 
         PreparedStatement preparedStatement;
         try {
-            preparedStatement = connection.prepareStatement(sql_update);
+            preparedStatement = conn.prepareStatement(sql_update);
             preparedStatement.setString(1, patient.getDiagnosis());
             preparedStatement.setString(2, patient.getNationalId());
 
-            if(DbUtil.update(sql_update, preparedStatement)>0)System.out.println("Dispatched drugs recorded.");
+            if(new MysqlDbUtil().update(sql_update, preparedStatement, conn)>0)System.out.println("Dispatched drugs recorded.");
             else System.out.println("Failed to record dispatched drugs.");
 
         } catch (SQLException e) {

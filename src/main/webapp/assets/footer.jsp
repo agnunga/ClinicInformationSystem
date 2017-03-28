@@ -1,8 +1,7 @@
 <footer>
     <p>© Company 2012</p>
     <a href="/ClinicInformationSystem/logout">Logout</a>
-</footer>
-</div>
+</footer> 
 </div>
 </div>
 

@@ -1,3 +1,4 @@
+<%@page import="java.sql.Connection"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.agunga.beans.Patient"%>
 <%@page import="com.agunga.beans.Receptionist"%>
@@ -26,7 +27,7 @@
                 </thead>
                 <tbody>
                     <%
-                        ArrayList<Patient> patients = new Receptionist().viewPatientsDetails();
+                        ArrayList<Patient> patients = new Receptionist().viewPatientsDetails((Connection) request.getAttribute("mycon"));
                         Iterator<Patient> iterator = patients.iterator();
                         while (iterator.hasNext()) {
                             Patient patient = iterator.next();
@@ -39,8 +40,16 @@
                         <td><%=patient.getDob()%></td>
                         <td><%=patient.getSex()%></td>
                         <td><%=patient.getCheckin()%></td>
-                        <td><a href="/ClinicInformationSystem/receptionist/update_patient?id=<%=patient.getNationalId()%>"><button
-                                    class="btn btn-warning btn-xs icon-edit">Edit</button></a></td>
+                        <td>
+                            <a href="/ClinicInformationSystem/receptionist/update_patient?id=<%=patient.getNationalId()%>">
+                                <button class="btn btn-warning btn-xs icon-edit"> Edit </button>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="/ClinicInformationSystem/receptionist/delete_patient?id=<%=patient.getNationalId()%>">
+                                <button class="btn btn-danger btn-xs icon-edit"> Delete </button>
+                            </a>
+                        </td>
                     </tr>
                     <%
                         }

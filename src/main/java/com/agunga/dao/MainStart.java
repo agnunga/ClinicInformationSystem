@@ -2,8 +2,10 @@
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
- */                 
+ */
 package com.agunga.dao;
+
+import java.sql.Connection;
 
 /**
  *
@@ -12,7 +14,8 @@ package com.agunga.dao;
 public class MainStart {
 
     public static void main(String[] args) {
-        if (DbUtil.createTables()) {
+        Connection conn = new MysqlDbUtil().connectDB();
+        if (new MysqlDbUtil().createTables(conn)) {
             System.out.println("Agunga--CONNECTED to CIS database");
         } else {
             System.err.println("Agunga--FAILED to connect to CIS database");
@@ -22,7 +25,7 @@ public class MainStart {
 //        
 //        Lamb tryLamb = () -> "My name is "+name+" age is "+age;
 //        System.out.println("tryLamb: "+tryLamb);
-        
+
     }
 }
 
