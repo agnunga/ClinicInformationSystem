@@ -5,21 +5,26 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Scanner;
-
 import com.agunga.dao.MysqlDbUtil;
+import javax.enterprise.inject.Instance;
+import javax.inject.Inject;
 
 /**
  * Created by agunga on 1/18/17.
  */
 public class Person {
- 
+
+//    @Inject
+//    @ConnectionType(ConnectionType.Type.MYSQL)
+//    public MyConectivity mcon;
     private String nationalId;
     private String name;
     private String phone;
     private String sex;
     private String dob;
-    
+
+//    @Inject
+//    Instance<MyConectivity> mcon;
     public MyConectivity mcon = new MysqlDbUtil();
 
     public String getNationalId() {
@@ -71,24 +76,6 @@ public class Person {
     }
 
     public Person() {
-        Scanner scanner = new Scanner(System.in);
-        /*
-//Using Scanner to take the patients details as a person.
-        System.out.print("Enter the com.agunga.cis.Person's National ID No: ");
-        setNationalId(scanner.nextInt());
-
-        System.out.print("Enter the com.agunga.cis.Person's Name: ");
-        setName(scanner.next());
-
-        System.out.print("Enter the com.agunga.cis.Person's Phone Number: ");
-        setPhone(scanner.next());
-
-        System.out.print("Enter the com.agunga.cis.Person's sex: ");
-        setSex(scanner.next());
-
-        System.out.print("Enter the com.agunga.cis.Person's Date of birth: ");
-        setDob(scanner.next());
-         */
     }
 
     public boolean checkPerson(String nationalId, Connection conn) {

@@ -1,24 +1,5 @@
-<%@page import="com.agunga.dao.MyConectivity"%>
-<%@page import="com.agunga.dao.ConnectionType"%>
-<%@page import="javax.inject.Inject"%>
 <jsp:include page="assets/header.jsp"/>
-<%!
-    @Inject
-    @ConnectionType(  ConnectionType.Type.MYSQL)
-    MyConectivity mconM;
 
-    @Inject
-    @ConnectionType(  ConnectionType.Type.ORACLE)
-    MyConectivity mconO;
-%>
-<%
-    if (request.getParameter("db") == "o") {
-        application.setAttribute("appCon", mconO);
-    } else if (request.getParameter("db") == "m") {
-        //ServletContect
-        application.setAttribute("appCon", mconM);
-    }
-%>
 <form class="well form-horizontal" action="config" method="post"
       id="contact_form" style="max-width: 900px; margin: 50px auto auto auto;">
     <fieldset>

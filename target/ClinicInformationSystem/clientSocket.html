@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>On way to novice</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div>JUST GETTING STARTED</div>
+        <div>
+            <div id="incomming">
+
+            </div>
+            <form method="POST" action="">
+                <div id="userDiv"><input type="text" name="username" id="username"></div>
+                <textarea id="message" name="message"></textarea>
+                <br/>
+                <button type="button" onclick="webSocketTest()">Send</button>
+                <br/>
+            </form>
+
+        </div>
+        <script>
+            var websocket = new WebSocket("ws:chrsba:8081/ClinicInformationSystem/wsmessage");
+            function webSocketTest() {
+                var username = document.getElementById("username").value;
+                if (username !== "") {
+                    websocket.send(username);
+                    document.getElementById("username").value = "";
+                    document.getElementById("username").type = "hidden";
+                }
+                var message = document.getElementById("message").value;
+                document.getElementById("message").value = "";
+                websocket.send(message);
+            }
+            websocket.onmessage = function (e) {
+                writeResponse(e.data);
+            };
+            function writeResponse(text) {
+                document.getElementById("incomming").innerHTML += "<br/>" + text;
+            }
+        </script>
+    </body>
+</html>

@@ -11,11 +11,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
- 
+
 import com.agunga.dao.ConnectionType;
 import com.agunga.dao.MyConectivity;
 import java.sql.Connection;
 import javax.inject.Inject;
+import javax.servlet.ServletContext;
 
 @WebServlet("/start")
 public class LoginServlet extends HttpServlet {
@@ -29,10 +30,11 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         PrintWriter out = response.getWriter();
+        ServletContext servletContext = getServletContext();
+        MyConectivity mconX = (MyConectivity) servletContext.getAttribute("appCon");
+        Connection connX = mcon.connectDB();
 
-        Connection conn = mcon.connectDB();
-
-        if (conn != null) {
+        if (connX != null) {
             out.print("Connected thro' CDI");
         } else {
             out.print("Connected thro' CDI");
@@ -44,6 +46,8 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+        ServletContext servletContext = getServletContext();
+        MyConectivity mconX = (MyConectivity) servletContext.getAttribute("appCon");
         Connection conn = mcon.connectDB();
 
         PrintWriter out = response.getWriter();

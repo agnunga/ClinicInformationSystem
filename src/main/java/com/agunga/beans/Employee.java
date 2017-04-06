@@ -109,8 +109,20 @@ abstract public class Employee extends Person {
         }
         return added;
     }
-
+    
     public String[] logIn(String employeeno, String password, Connection con) {
+        if (mcon != null) {
+            System.out.println("mcon is Not null logIn");
+        } else {
+            System.out.println("mcon null logIn");
+        }
+
+        if (con != null) {
+            System.out.println("con is NOT null logIn");
+        } else {
+            System.out.println("con null logIn");
+        }
+
         String[] role = {"", ""};
         String sql = "SELECT title,  employeeno"
                 + " FROM employees "
