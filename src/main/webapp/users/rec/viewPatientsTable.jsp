@@ -1,7 +1,6 @@
-<%@page import="java.sql.Connection"%>
-<%@page import="java.util.ArrayList"%>
-<%@page import="com.agunga.beans.Patient"%>
-<%@page import="com.agunga.beans.Receptionist"%>
+<%@page import="com.agunga.models.Patient"%>
+<%@page import="com.agunga.beansI.ReceptionistBeanI"%> 
+<%@page import="java.util.ArrayList"%> 
 <%@page import="java.util.Iterator"%>
 <div class="col-xs-12">
     <div class="box">
@@ -27,7 +26,9 @@
                 </thead>
                 <tbody>
                     <%
-                        ArrayList<Patient> patients = new Receptionist().viewPatientsDetails((Connection) request.getAttribute("mycon"));
+                        String id = request.getParameter("id");
+                        ReceptionistBeanI rbi = (ReceptionistBeanI) request.getAttribute("rbi");
+                        ArrayList<Patient> patients = rbi.viewPatient(id);
                         Iterator<Patient> iterator = patients.iterator();
                         while (iterator.hasNext()) {
                             Patient patient = iterator.next();

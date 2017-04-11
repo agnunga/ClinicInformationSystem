@@ -5,10 +5,12 @@
  */
 package com.agunga.controllers;
 
+import com.agunga.beansI.ReceptionistBeanI;
 import com.agunga.dao.ConnectionType;
 import com.agunga.dao.MyConectivity;
 import java.io.IOException;
 import java.sql.Connection;
+import javax.ejb.EJB;
 import javax.inject.Inject;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -21,18 +23,16 @@ import javax.servlet.http.HttpSession;
 @WebServlet(name = "ReceptionistStartServlet", urlPatterns = {"/receptionist"})
 public class ReceptionistStartServlet extends HttpServlet {
 
-    @Inject
-    @ConnectionType(ConnectionType.Type.MYSQL)
-    MyConectivity mcon;
+    @EJB
+    ReceptionistBeanI rbi;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession(false);
         if (session != null && !session.isNew() && session.getAttribute("rsession") != null) {
-            
-            Connection conn = mcon.connectDB();
-            request.setAttribute("mycon", conn);
+
+            request.setAttribute("rbi", rbi);
             RequestDispatcher dispatcher = request.getRequestDispatcher("/users/rec/receptionist.jsp");
             dispatcher.forward(request, response);
         } else {
@@ -44,6 +44,6 @@ public class ReceptionistStartServlet extends HttpServlet {
     @Override
     public String getServletInfo() {
         return "Receptionist landing servlet";
-    }// </editor-fold>
+    }
 
 }

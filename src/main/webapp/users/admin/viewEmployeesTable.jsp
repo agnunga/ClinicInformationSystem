@@ -1,6 +1,6 @@
-<%@page import="java.sql.Connection"%>
-<%@page import="com.agunga.beans.Employee"%>
-<%@page import="com.agunga.beans.Administrator"%>
+<%@page import="javax.ejb.EJB"%>
+<%@page import="com.agunga.beansI.EmployeeBeanI"%>
+<%@page import="com.agunga.models.Employee"%> 
 <%@page import="java.util.Iterator"%>
 <div class="col-xs-12"> 
     <div class="box-body">
@@ -11,15 +11,16 @@
                     <th>Employee No</th>
                     <th>Name</th>
                     <th>Phone</th>
-                    <th>DoB</th>
+                    <th>D o B</th>
                     <th>Sex</th>
                     <th>Role</th>
                     <th>Date Employed</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody> 
                 <%
-                    Iterator<Employee> iterator = new Administrator().viewEmployees((Connection)request.getAttribute("mycon")).iterator();
+                    EmployeeBeanI eb = (EmployeeBeanI) request.getAttribute("employeeBean");
+                    Iterator<Employee> iterator = eb.view().iterator();
                     while (iterator.hasNext()) {
                         Employee e = iterator.next();
                 %>
@@ -32,8 +33,11 @@
                     <td><%=e.getSex()%></td>
                     <td><%=e.getTitle()%></td>
                     <td><%=e.getDateEmployed()%></td>
-                    <td><a href="update_employee?id=<%=e.getNationalId()%>"><button
-                                class="btn btn-warning btn-xs icon-edit">Edit</button></a></td>
+                    <td>
+                        <a href="update_employee?id=<%=e.getNationalId()%>">
+                            <button class="btn btn-warning btn-xs icon-edit">Edit</button>
+                        </a>
+                    </td>
                 </tr>
                 <%
                     }

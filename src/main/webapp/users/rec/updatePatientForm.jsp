@@ -1,6 +1,5 @@
-<%@page import="java.sql.Connection"%>
-<%@page import="com.agunga.beans.Patient"%>
-<%@page import="com.agunga.beans.Receptionist"%>
+<%@page import="com.agunga.beansI.ReceptionistBeanI"%>
+<%@page import="com.agunga.models.Patient"%>
 <%@page import="java.util.Iterator"%>
 <form class="well form-horizontal" action="update_patient" method="post"
       id="contact_form">
@@ -8,7 +7,9 @@
         <!-- Form Name -->
         <legend>Update Patient Details</legend>
         <%
-            Patient patient = new Receptionist().viewSinglePatientDetails(request.getParameter("id"), (Connection) request.getAttribute("mycon"));
+            String id = request.getParameter("id");
+            ReceptionistBeanI rbi = (ReceptionistBeanI) request.getAttribute("rbi");
+            Patient patient = rbi.viewPatient(id).get(0);
         %>
         <div class="form-group">
             <label class="col-md-4 control-label">Patient ID: </label>

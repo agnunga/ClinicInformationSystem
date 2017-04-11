@@ -1,19 +1,12 @@
 package com.agunga.beans;
 
-import com.agunga.beansI.EmployeeBeanI;
 import com.agunga.models.Patient;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.ejb.Stateless;
 import com.agunga.beansI.PatientBeanI;
-import com.agunga.beansI.PersonBeanI;
-import com.agunga.dao.ConnectionType;
-import com.agunga.dao.MyConectivity;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.util.ArrayList;
-import javax.ejb.EJB;
-import javax.inject.Inject;
 
 @Stateless(mappedName = "patientBean")
 public class PatientBean extends BaseBean implements PatientBeanI {
@@ -72,20 +65,19 @@ public class PatientBean extends BaseBean implements PatientBeanI {
 
     @Override
     public ArrayList<Patient> view(String patientId) {
-
-        if (mcon != null) {
-            System.out.println("IN viewPatientsDetails SUCCESS");
-        } else {
-            System.out.println("IN viewPatientsDetails NULL XXXX");
-
+        String andClause = "";
+        if (patientId.length() != 0) {
+            andClause = "AND patients.nationalid = '" + patientId + "'";
         }
+
         ArrayList<Patient> patients = new ArrayList<>();
         String sql_select = "SELECT "
                 + " id, "
                 + " persons.nationalid, patientid, name, phone, dob, sex, "
                 + " checkin, checkout, addedby "
                 + " FROM persons INNER JOIN patients "
-                + " WHERE patients.nationalid = persons.nationalid ;";
+                + " WHERE patients.nationalid = persons.nationalid "
+                + andClause + ";";
 //                + " ORDER BY patient.checkin DESC LIMIT 500 ";
 
         ResultSet resultSet = mcon.select(sql_select, conn);

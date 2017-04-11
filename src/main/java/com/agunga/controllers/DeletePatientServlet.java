@@ -18,7 +18,7 @@ public class DeletePatientServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
 
-    @EJB(name = "receptionistBean")
+    @EJB
     ReceptionistBeanI receptionistBean;
 
     @Override

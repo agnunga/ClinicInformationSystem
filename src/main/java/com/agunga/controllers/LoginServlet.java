@@ -1,5 +1,5 @@
 package com.agunga.controllers;
- 
+
 import com.agunga.beansI.EmployeeBeanI;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -23,8 +23,6 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        PrintWriter out = response.getWriter();
-
         RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
         dispatcher.forward(request, response);
     }
@@ -32,11 +30,10 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        
         PrintWriter out = response.getWriter();
         String employeeno = (request.getParameter("employeeNo"));
         String password = (request.getParameter("password"));
-        
+
         String[] role = eb.logIn(employeeno, password);
         out.print("Role is: " + role[0]);
         HttpSession session = request.getSession();

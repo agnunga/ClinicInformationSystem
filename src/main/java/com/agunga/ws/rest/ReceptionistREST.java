@@ -6,14 +6,13 @@
 package com.agunga.ws.rest;
 
 import com.agunga.beans.ReceptionistBean;
-import com.agunga.models.Patient; 
+import com.agunga.models.Patient;
+import com.agunga.models.ResponseObject;
 import java.util.ArrayList;
 import javax.ejb.EJB;
-import javax.ejb.Stateless;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -24,7 +23,7 @@ import javax.ws.rs.core.Response;
 /**
  *
  * @author agunga
- */ 
+ */
 @Path("/receptionist")
 public class ReceptionistREST {
 
@@ -35,18 +34,17 @@ public class ReceptionistREST {
     @Path("/view_patient/{param}")
     @Produces(MediaType.APPLICATION_JSON)
     public Patient viewSinglePatientDetails(@PathParam("param") String id) {
+//        Response.status(200).entity("Patient registration failed").build();
         return receptionistBean.viewPatient(id).get(0);
     }
 
-    @POST
-    @Path("/register_patient/{param}")
+    @GET
+    @Path("/add_patient/{param}")
+    @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response registerPatient(Patient patient) {
-        if (receptionistBean.addPatient(patient)) {
-            return Response.status(200).entity("Patient Registered. ").build();
-        } else {
-            return Response.status(200).entity("Patient registration failed").build();
-        }
+    public ResponseObject addPatient(Patient patient) {
+        ResponseObject responseObject = new ResponseObject();
+        return responseObject;
     }
 
     @GET

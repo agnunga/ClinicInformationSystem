@@ -1,5 +1,5 @@
 package com.agunga.controllers;
- 
+
 import com.agunga.beansI.ReceptionistBeanI;
 import java.io.IOException;
 
@@ -18,10 +18,11 @@ public class UpdatePatientServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
     @EJB
-    ReceptionistBeanI receptionistBean;
+    ReceptionistBeanI rbi;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setAttribute("rbi", rbi);
         if (request.getParameter("id") != null) {
             RequestDispatcher rd = request.getRequestDispatcher("/users/rec/updatePatient.jsp");
             rd.forward(request, response);
@@ -44,7 +45,7 @@ public class UpdatePatientServlet extends HttpServlet {
 
         patient.setPatientId(request.getParameter("patientId"));
 
-        if (receptionistBean.updatePatient(patient)) {
+        if (rbi.updatePatient(patient)) {
             response.sendRedirect("view_patients?id=" + patient.getNationalId() + "&us=0");
             request.setAttribute("updated", patient.getName() + " (" + patient.getNationalId() + ") successfully updated.");
             RequestDispatcher rd = request.getRequestDispatcher("/users/rec/viewPatients.jsp");

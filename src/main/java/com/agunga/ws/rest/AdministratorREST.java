@@ -4,13 +4,12 @@
  * and open the template in the editor.
  */
 package com.agunga.ws.rest;
- 
+
 import com.agunga.beansI.AdministratorBeanI;
 import com.agunga.models.Employee;
-import com.agunga.models.ResponseObject; 
+import com.agunga.models.ResponseObject;
 import java.util.ArrayList;
 import javax.ejb.EJB;
-import javax.ejb.Stateless; 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -18,7 +17,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
- 
+
 @Path("/admin")
 public class AdministratorREST {
 
