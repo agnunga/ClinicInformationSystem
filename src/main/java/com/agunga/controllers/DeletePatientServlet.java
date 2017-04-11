@@ -1,5 +1,6 @@
 package com.agunga.controllers;
-
+ 
+import com.agunga.beansI.ReceptionistBeanI;
 import java.io.IOException;
 
 import javax.servlet.RequestDispatcher;
@@ -9,26 +10,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.agunga.beans.Patient;
-import com.agunga.beans.Receptionist;
-import com.agunga.dao.ConnectionType;
-import com.agunga.dao.MyConectivity;
-import java.sql.Connection;
-import javax.inject.Inject;
+import com.agunga.models.Patient; 
+import javax.ejb.EJB; 
 
 @WebServlet("/receptionist/delete_patient")
 public class DeletePatientServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
 
-    @Inject
-    @ConnectionType(ConnectionType.Type.MYSQL)
-    MyConectivity mcon;
+    @EJB(name = "receptionistBean")
+    ReceptionistBeanI receptionistBean;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Connection conn = mcon.connectDB();
-        request.setAttribute("mycon", conn);
         if (request.getParameter("id") != null) {
             RequestDispatcher rd = request.getRequestDispatcher("/users/rec/viewPatients.jsp");
             rd.forward(request, response);
@@ -41,13 +35,11 @@ public class DeletePatientServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Connection conn = mcon.connectDB();
-        request.setAttribute("mycon", conn);
-
+       
         Patient patient = new Patient();
-        int id = Integer.parseInt(request.getParameter("patientId"));
+        String id = request.getParameter("patientId");
 
-        if (new Receptionist().deletePatientDetails(patient, id, conn)) {
+        if (receptionistBean.deletePatient(id)) {
             response.sendRedirect("view_patients?id=" + patient.getNationalId() + "&us=0");
             request.setAttribute("deleted", patient.getName() + " (" + patient.getNationalId() + ") successfully updated.");
             RequestDispatcher rd = request.getRequestDispatcher("/users/rec/viewPatients.jsp");

@@ -81,10 +81,6 @@ public class BusinessAccount extends Account {
 
         return getAmount();
     }
-
-    @Override
-    boolean open() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+ 
 
 }

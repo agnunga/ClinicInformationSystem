@@ -6,6 +6,7 @@
 package com.agunga.dao;
 
 import java.sql.Connection;
+import javax.inject.Inject;
 
 /**
  *
@@ -13,22 +14,12 @@ import java.sql.Connection;
  */
 public class MainStart {
 
+    @Inject
+    @ConnectionType(ConnectionType.Type.MYSQL)
+    private MyConectivity mcon;
+    private Connection conn = mcon.connectDB();
+
     public static void main(String[] args) {
-        Connection conn = new MysqlDbUtil().connectDB();
-        if (new MysqlDbUtil().createTables(conn)) {
-            System.out.println("Agunga--CONNECTED to CIS database");
-        } else {
-            System.err.println("Agunga--FAILED to connect to CIS database");
-        }
-//        String name = "oloo";
-//        int age = 39;
-//        
-//        Lamb tryLamb = () -> "My name is "+name+" age is "+age;
-//        System.out.println("tryLamb: "+tryLamb);
 
     }
 }
-
-//interface Lamb{
-//String tryLamb();
-//}

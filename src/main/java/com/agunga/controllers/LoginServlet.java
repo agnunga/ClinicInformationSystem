@@ -1,8 +1,9 @@
 package com.agunga.controllers;
-
-import com.agunga.beans.Administrator;
+ 
+import com.agunga.beansI.EmployeeBeanI;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.ejb.EJB;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,33 +13,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.agunga.dao.ConnectionType;
-import com.agunga.dao.MyConectivity;
-import java.sql.Connection;
-import javax.inject.Inject;
-import javax.servlet.ServletContext;
-
 @WebServlet("/start")
 public class LoginServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
 
-    @Inject
-    @ConnectionType(ConnectionType.Type.MYSQL)
-    public MyConectivity mcon;
+    @EJB
+    EmployeeBeanI eb;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         PrintWriter out = response.getWriter();
-        ServletContext servletContext = getServletContext();
-        MyConectivity mconX = (MyConectivity) servletContext.getAttribute("appCon");
-        Connection connX = mcon.connectDB();
 
-        if (connX != null) {
-            out.print("Connected thro' CDI");
-        } else {
-            out.print("Connected thro' CDI");
-        }
         RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
         dispatcher.forward(request, response);
     }
@@ -46,16 +32,12 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        ServletContext servletContext = getServletContext();
-        MyConectivity mconX = (MyConectivity) servletContext.getAttribute("appCon");
-        Connection conn = mcon.connectDB();
-
+        
         PrintWriter out = response.getWriter();
         String employeeno = (request.getParameter("employeeNo"));
         String password = (request.getParameter("password"));
-//        getServletContext().getRealPath(request.getServletPath());
-//        getServletContext().getServerInfo();
-        String[] role = new Administrator().logIn(employeeno, password, conn);
+        
+        String[] role = eb.logIn(employeeno, password);
         out.print("Role is: " + role[0]);
         HttpSession session = request.getSession();
 

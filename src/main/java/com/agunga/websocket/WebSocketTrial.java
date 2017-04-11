@@ -6,11 +6,10 @@
 package com.agunga.websocket;
 
 import java.io.IOException;
+import java.time.ZonedDateTime;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.websocket.OnClose;
 import javax.websocket.OnError;
 import javax.websocket.OnMessage;
@@ -32,7 +31,8 @@ public class WebSocketTrial {
         chatUsers.add(session);
         System.out.println("openConnection Session ID: " + session.getId());
         try {
-            session.getBasicRemote().sendText("Conection opened as: " + session.getId());
+            session.getBasicRemote().sendText("<p style=\"text-align: center; font: x-small; color: blue;\">"
+                    + "Conected</p>");
         } catch (IOException ex) {
             System.err.println("My Error : " + ex.getMessage() + " caused by : ");
         }
@@ -44,10 +44,40 @@ public class WebSocketTrial {
         String username = (String) session.getUserProperties().get("username");
         if (username == null || "".equals(username)) {
             session.getUserProperties().put("username", message);
-            session.getBasicRemote().sendText("New login : " + message);
-        } else {
+            session.getBasicRemote().sendText("<p style=\"text-align: center; font: x-small; color: green;\">"
+                    + "Howdy, " + message + ". Login Success"
+                    + "</p>");
             for (Session chatUser : chatUsers) {
-                chatUser.getBasicRemote().sendText(username + " : " + message);
+                if (chatUser != session) {
+                    chatUser.getBasicRemote().sendText("<p style=\"text-align: center; font: x-small; color: green;\">"
+                            + message + " joined.</p>");
+                }
+            }
+        } else {
+
+            for (Session chatUser : chatUsers) {
+                String right = (chatUser != session) ? "" : " right";
+                String alt = (chatUser != session) ? (username.charAt(0) + "").toUpperCase() : " Me";
+                String pull = (chatUser == session) ? "pull-right" : "pull-left";
+                String startOther = "<div class=\"direct-chat-msg" + right + "\">\n"
+                        + " <div class=\"direct-chat-info clearfix\">\n"
+                        + " <span class=\"direct-chat-name " + pull + "\">";//username
+
+                String beforeMessage = "</span>\n"
+                        + " </div>\n"
+                        + " <img class=\"direct-chat-img\" src=\"../dist/img/user1-128x128.jpg\" alt=\""
+                        + alt + "\"> "
+                        + " <div class=\"direct-chat-text\">\n";//message
+
+                String end = " <div class=\"my_message_time\">"
+                        + "10:39 pm"
+                        + "</div></div> </div>";
+
+                if (chatUser == session) {
+                    chatUser.getBasicRemote().sendText(startOther + beforeMessage + message + end);
+                } else {
+                    chatUser.getBasicRemote().sendText(startOther + username + beforeMessage + message + end);
+                }
             }
         }
     }
@@ -59,7 +89,19 @@ public class WebSocketTrial {
 
     @OnClose
     public void onClose(Session session) {
+        String username = (String) session.getUserProperties().get("username");
+        chatUsers.forEach((chatUser) -> {
+            if (username != null) {
+                try {
+                    chatUser.getBasicRemote().sendText(""
+                            + "<p style=\"text-align: center; font: x-small; color: red;\">"
+                            + username + " Left. </p>");
+                } catch (IOException ex) {
+                    System.out.println("Caught ERROR : " + ex.getMessage());
+                }
+            }
+        });
         chatUsers.remove(session);
-        System.out.println(session.getId() + " clossed ");
+        System.out.println(session.getId() + " Removed");
     }
 }

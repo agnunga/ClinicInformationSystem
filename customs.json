@@ -1,0 +1,17 @@
+{
+    "elements": {
+        "div": {},
+        "style": {}
+    },
+    "attributes": {
+        "data-toggle": {
+            "context": "span"
+        },
+        "data-widget": {
+            "context": "button"
+        },
+        "placeholder": {
+            "context": "input"
+        }
+    }
+}

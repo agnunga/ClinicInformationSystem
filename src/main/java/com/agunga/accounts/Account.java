@@ -43,9 +43,7 @@ public abstract class Account {
     public void setAmount(double amount) {
         this.amount = amount;
     }
-
-    abstract boolean open();
-
+ 
     abstract boolean credit(double amount);
 
     abstract boolean debit(double amount);

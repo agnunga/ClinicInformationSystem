@@ -1,7 +1,7 @@
 package com.agunga.controllers;
-
+ 
+import com.agunga.beansI.ReceptionistBeanI;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,26 +10,18 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.agunga.beans.Patient;
-import com.agunga.beans.Receptionist;
-import com.agunga.dao.ConnectionType;
-import com.agunga.dao.MyConectivity;
-import java.sql.Connection;
-import javax.inject.Inject;
+import com.agunga.models.Patient;
+import javax.ejb.EJB;
 
 @WebServlet("/receptionist/update_patient")
 public class UpdatePatientServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
-
-    @Inject
-    @ConnectionType(ConnectionType.Type.MYSQL)
-    MyConectivity mcon;
+    @EJB
+    ReceptionistBeanI receptionistBean;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Connection conn = mcon.connectDB();
-        request.setAttribute("mycon", conn);
         if (request.getParameter("id") != null) {
             RequestDispatcher rd = request.getRequestDispatcher("/users/rec/updatePatient.jsp");
             rd.forward(request, response);
@@ -42,8 +34,6 @@ public class UpdatePatientServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Connection conn = mcon.connectDB();
-        request.setAttribute("mycon", conn);
 
         Patient patient = new Patient();
         patient.setName(request.getParameter("name"));
@@ -54,7 +44,7 @@ public class UpdatePatientServlet extends HttpServlet {
 
         patient.setPatientId(request.getParameter("patientId"));
 
-        if (new Receptionist().updatePatintDetails(patient, conn)) {
+        if (receptionistBean.updatePatient(patient)) {
             response.sendRedirect("view_patients?id=" + patient.getNationalId() + "&us=0");
             request.setAttribute("updated", patient.getName() + " (" + patient.getNationalId() + ") successfully updated.");
             RequestDispatcher rd = request.getRequestDispatcher("/users/rec/viewPatients.jsp");

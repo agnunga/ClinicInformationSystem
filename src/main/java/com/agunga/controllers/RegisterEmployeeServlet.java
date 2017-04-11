@@ -1,11 +1,9 @@
 package com.agunga.controllers;
-
-import com.agunga.beans.Administrator;
-import com.agunga.dao.ConnectionType;
-import com.agunga.dao.MyConectivity;
+ 
+import com.agunga.beansI.AdministratorBeanI;
+import com.agunga.models.Employee;
 import java.io.IOException;
-import java.sql.Connection;
-import javax.inject.Inject;
+import javax.ejb.EJB;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -17,17 +15,13 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("admin/register_employee")
 public class RegisterEmployeeServlet extends HttpServlet {
 
-    @Inject
-    @ConnectionType(ConnectionType.Type.MYSQL)
-    MyConectivity mcon;
-
     private static final long serialVersionUID = 1L;
+
+    @EJB
+    AdministratorBeanI administratorBean;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-        Connection conn = mcon.connectDB();
-        request.setAttribute("mycon", conn);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/users/admin/registerEmployee.jsp");
         dispatcher.forward(request, response);
     }
@@ -35,10 +29,7 @@ public class RegisterEmployeeServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        Connection conn = mcon.connectDB();
-        request.setAttribute("mycon", conn);
-
-        Administrator emp = new Administrator();
+        Employee emp = new Employee();
 
         emp.setName(request.getParameter("name"));
         emp.setNationalId(request.getParameter("nationalId"));
@@ -51,7 +42,7 @@ public class RegisterEmployeeServlet extends HttpServlet {
         emp.setTitle(request.getParameter("title"));
         char t = emp.getTitle().charAt(0);
 
-        if (emp.registerEmployee(emp, conn)) {
+        if (administratorBean.addEmployee(emp)) {
             switch (t) {
                 case 'd': {
                     RequestDispatcher rd = request.getRequestDispatcher("/users/admin/registerEmployee.jsp");

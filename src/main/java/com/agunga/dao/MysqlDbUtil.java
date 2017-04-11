@@ -1,6 +1,6 @@
 package com.agunga.dao;
 
-import com.agunga.beans.MyUtility;
+import com.agunga.utils.MyUtility;
 
 import java.sql.*;
 import java.util.logging.Level;
@@ -38,6 +38,77 @@ public class MysqlDbUtil implements MyConectivity {
             ne.getMessage();
         }
         return conn;
+    }
+
+    @Override
+    public int insertMany(PreparedStatement[] preparedStatements, Connection conn) {
+         int isInserted = -1;
+        try {
+            conn.setAutoCommit(false);
+            for (PreparedStatement preparedStatement : preparedStatements) {
+                isInserted = preparedStatement.executeUpdate();
+            }
+        } catch (SQLException e) {
+            System.err.println("Error " + e.getMessage());
+
+            if (e.getErrorCode() == 1062) {
+                MyUtility.myPrintln("Record exists.");
+            }
+        }
+        return isInserted;
+    }
+
+    @Override
+    public int insert(PreparedStatement preparedStatement, Connection conn) {
+        int isInserted = -1;
+        try {
+            isInserted = preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println("Error " + e.getMessage());
+
+            if (e.getErrorCode() == 1062) {
+                MyUtility.myPrintln("Record exists.");
+            }
+        }
+//        System.out.println("isInserted =  "+isInserted);
+        return isInserted;
+    }
+
+    @Override
+    public ResultSet select(String sql_select, Connection conn) {
+        ResultSet resultSet = null;
+        try {
+            PreparedStatement preparedStatement = conn.prepareStatement(sql_select);
+            resultSet = preparedStatement.executeQuery();
+
+        } catch (SQLException e) {
+            System.err.println("Error " + e.getMessage());
+        }
+        return resultSet;
+    }
+
+    @Override
+    public int update(PreparedStatement preparedStatement, Connection conn) {
+        int isUpdated = -1;
+        try {
+            isUpdated = preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println("Error " + e.getMessage());
+        }
+        return isUpdated;
+    }
+
+    @Override
+    public int delete(String sql_delete, int id, Connection conn) {
+        int isDeleted = -1;
+        try {
+            PreparedStatement preparedStatement = conn.prepareStatement(sql_delete);
+            preparedStatement.setInt(1, id);
+            isDeleted = preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println("Error " + e.getMessage());
+        }
+        return isDeleted;
     }
 
     @Override
@@ -135,114 +206,5 @@ public class MysqlDbUtil implements MyConectivity {
         }
         return created;
     }
-
-    @Override
-    public void createTable(String sql_create_table, String table_name,  Connection conn) {
-        try {
-            conn.setAutoCommit(false);
-            PreparedStatement preparedStatement = conn.prepareStatement(sql_create_table);
-            preparedStatement.executeUpdate();
-            System.out.println(" Table created");
-            conn.commit();
-        } catch (SQLException e) {
-
-            try {
-                conn.rollback();
-                //				System.err.println("Rolled back.");
-            } catch (SQLException e2) {
-                System.err.println("Error " + e2.getMessage());
-            }
-            //			System.err.println(e.getMessage());
-            if (e.getErrorCode() == 955) {
-                System.out.println("Table name already in use. Enter 1 to overwrite the table, 0 to exit");
-                int action = MyUtility.myScanner().nextInt();
-                if (action == 1) {
-                    PreparedStatement preparedStatement;
-                    try {
-                        preparedStatement = conn.prepareStatement("DROP TABLE " + table_name);
-                        preparedStatement.executeUpdate();
-                        System.out.println("Table droped, recreating the table..");
-                        createTable(sql_create_table, table_name, conn);
-
-                    } catch (SQLException e1) {
-                        System.err.println("Error " + e1.getMessage());
-                    }
-                }
-
-            }
-        }
-    }
-
-    @Override
-    public int insertMany(PreparedStatement[] preparedStatements, Connection conn) {
-        this.conn = new MysqlDbUtil().connectDB();
-        int isInserted = -1;
-        try {
-            conn.setAutoCommit(false);
-            for (PreparedStatement preparedStatement : preparedStatements) {
-                isInserted = preparedStatement.executeUpdate();
-            }
-        } catch (SQLException e) {
-            System.err.println("Error " + e.getMessage());
-
-            if (e.getErrorCode() == 1062) {
-                MyUtility.myPrintln("Record exists.");
-            }
-        }
-        return isInserted;
-    }
-
-    @Override
-    public int insert(PreparedStatement preparedStatement, Connection conn) {
-        int isInserted = -1;
-        try {
-            isInserted = preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            System.err.println("Error " + e.getMessage());
-
-            if (e.getErrorCode() == 1062) {
-                MyUtility.myPrintln("Record exists.");
-            }
-        }
-//        System.out.println("isInserted =  "+isInserted);
-        return isInserted;
-    }
-
-    @Override
-    public ResultSet select(String sql_select, Connection conn) {
-        ResultSet resultSet = null;
-        try {
-            PreparedStatement preparedStatement = conn.prepareStatement(sql_select);
-            resultSet = preparedStatement.executeQuery();
-
-        } catch (SQLException e) {
-            System.err.println("Error " + e.getMessage());
-        }
-        return resultSet;
-    }
-
-    @Override
-    public int update(String sql_update, PreparedStatement preparedStatement, Connection conn) {
-        int isUpdated = -1;
-        try {
-            isUpdated = preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            System.err.println("Error " + e.getMessage());
-        }
-        return isUpdated;
-    }
-
-    @Override
-    public int delete(String sql_delete, int id, Connection conn) {
-        int isDeleted = -1;
-        try {
-            PreparedStatement preparedStatement = conn.prepareStatement(sql_delete);
-            preparedStatement.setInt(1, id);
-            isDeleted = preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            System.err.println("Error " + e.getMessage());
-        }
-        return isDeleted;
-    }
-
+ 
 }

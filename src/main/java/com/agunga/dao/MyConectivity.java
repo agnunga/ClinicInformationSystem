@@ -21,15 +21,13 @@ public interface MyConectivity {
 
     public boolean createTables(Connection conn);
 
-    public void createTable(String sql_create_table, String table_name, Connection conn);
-
     public int insertMany(PreparedStatement[] preparedStatements, Connection conn);
 
-    public int insert(PreparedStatement preparedStatement,  Connection conn);
+    public int insert(PreparedStatement preparedStatement, Connection conn);
 
     public ResultSet select(String sql_select, Connection con);
 
-    public int update(String sql_update, PreparedStatement preparedStatement, Connection conn);
+    public int update(PreparedStatement preparedStatement, Connection conn);
 
-    public int delete(String sql_delete, int id,  Connection conn);
+    public int delete(String sql_delete, int id, Connection conn);
 }
