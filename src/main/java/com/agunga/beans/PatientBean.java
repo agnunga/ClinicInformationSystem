@@ -66,7 +66,7 @@ public class PatientBean extends BaseBean implements PatientBeanI {
     @Override
     public ArrayList<Patient> view(String patientId) {
         String andClause = "";
-        if (patientId.length() != 0) {
+        if (!"".equals(patientId)) {
             andClause = "AND patients.nationalid = '" + patientId + "'";
         }
 

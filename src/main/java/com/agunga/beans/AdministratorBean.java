@@ -3,10 +3,8 @@ package com.agunga.beans;
 import java.util.ArrayList;
 import javax.ejb.Stateless;
 import com.agunga.beansI.AdministratorBeanI;
-import com.agunga.beansI.EmployeeBeanI;
-import com.agunga.models.Employee;
-import javax.ejb.EJB;
-
+ import com.agunga.models.Employee;
+ 
 /**
  * Created by agunga on 1/18/17.
  */

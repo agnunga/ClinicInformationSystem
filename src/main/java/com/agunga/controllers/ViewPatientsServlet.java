@@ -1,11 +1,8 @@
 package com.agunga.controllers;
 
-import com.agunga.dao.ConnectionType;
-import com.agunga.dao.MyConectivity;
+import com.agunga.beansI.ReceptionistBeanI;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.Connection;
-import javax.inject.Inject;
+import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,17 +11,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @WebServlet("/receptionist/view_patients")
-public class viewPatientsServlet extends HttpServlet {
-@Inject
-@ConnectionType(ConnectionType.Type.MYSQL)
-MyConectivity mcon;
+public class ViewPatientsServlet extends HttpServlet {
+
     private static final long serialVersionUID = 1L;
+
+    @EJB
+    ReceptionistBeanI rbi;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        PrintWriter out = response.getWriter();
-        Connection conn = mcon.connectDB();
-        request.setAttribute("mycon", conn);
+        request.setAttribute("rbi", rbi);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/users/rec/viewPatients.jsp");
         dispatcher.forward(request, response);
     }
@@ -32,6 +28,5 @@ MyConectivity mcon;
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     }
-
 
 }

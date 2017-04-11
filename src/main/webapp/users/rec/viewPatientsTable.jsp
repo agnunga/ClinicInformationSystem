@@ -26,7 +26,10 @@
                 </thead>
                 <tbody>
                     <%
-                        String id = request.getParameter("id");
+                        String id = "";
+                        if (request.getParameter("id") != null) {
+                            id = request.getParameter("id");
+                        }
                         ReceptionistBeanI rbi = (ReceptionistBeanI) request.getAttribute("rbi");
                         ArrayList<Patient> patients = rbi.viewPatient(id);
                         Iterator<Patient> iterator = patients.iterator();
