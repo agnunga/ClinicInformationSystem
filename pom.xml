@@ -74,6 +74,13 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <!-- https://mvnrepository.com/artifact/org.wildfly.plugins/wildfly-maven-plugin -->
+            <dependency>
+                <groupId>org.wildfly.plugins</groupId>
+                <artifactId>wildfly-maven-plugin</artifactId>
+                <version>1.2.0.Alpha4</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
@@ -286,6 +293,7 @@
                             <skip>true</skip>
                         </configuration>
                     </plugin>
+                    
                 </plugins>
             </build>
         </profile>

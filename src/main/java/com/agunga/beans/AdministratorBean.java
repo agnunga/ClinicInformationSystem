@@ -11,9 +11,6 @@ import com.agunga.beansI.AdministratorBeanI;
 @Stateless(mappedName = "administratorBean")
 public class AdministratorBean extends BaseBean implements AdministratorBeanI {
 
-//    @EJB(name = "employeeBean")
-//    EmployeeBeanI employeeBean;
-
     @Override
     public boolean addEmployee(Employee employee) {
         return employeeBean.add(employee);
