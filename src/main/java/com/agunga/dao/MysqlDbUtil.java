@@ -1,6 +1,6 @@
 package com.agunga.dao;
 
-import com.agunga.utils.MyUtility;
+import com.agunga.util.MyUtility;
 
 import java.sql.*;
 import java.util.logging.Level;
@@ -131,7 +131,7 @@ public class MysqlDbUtil implements MyConectivity {
                 + " addedby varchar(15) "
                 + " );";
 
-        String create_employee_table = "CREATE TABLE IF NOT EXISTS employees("//
+        String create_employee_table = "CREATE TABLE IF NOT EXISTS employees("  
                 + " employeeno varchar(15) PRIMARY KEY, "
                 + " nationalid int(11) NOT NULL, "
                 + " dateemployed varchar(30) NOT NULL, "

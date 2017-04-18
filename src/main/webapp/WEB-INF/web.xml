@@ -18,7 +18,7 @@
     </welcome-file-list> -->
     <servlet>
         <servlet-name>start</servlet-name>
-        <servlet-class>com.agunga.controllers.LoginServlet</servlet-class>
+        <servlet-class>com.agunga.controller.LoginServlet</servlet-class>
         <load-on-startup>0</load-on-startup>
     </servlet>
     <error-page>
@@ -28,8 +28,8 @@
     <error-page>
         <exception-type>java.lang.Exception</exception-type>
         <location>/error.jsp</location>
-    </error-page> 
-<!--    <init-param>
+    </error-page>
+    <!--    <init-param>
         <param-name>com.sun.jersey.api.json.POJOMappingFeature</param-name>
         <param-value>true</param-value>
     </init-param>-->
