@@ -5,6 +5,9 @@
  */
 package com.agunga.model;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
 /**
  *
  * @author agunga

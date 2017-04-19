@@ -120,12 +120,7 @@
         </dependency>
 
         <!-- Import the JPA API, we use provided scope as the API is included in 
-        JBoss AS 7 -->
-        <dependency>
-            <groupId>org.hibernate.javax.persistence</groupId>
-            <artifactId>hibernate-jpa-2.0-api</artifactId>
-            <scope>provided</scope>
-        </dependency>
+        JBoss AS 7 --> 
 
         <!-- Import the EJB API, we use provided scope as the API is included in 
         JBoss AS 7 -->
@@ -133,6 +128,13 @@
             <groupId>org.jboss.spec.javax.ejb</groupId>
             <artifactId>jboss-ejb-api_3.1_spec</artifactId>
             <scope>provided</scope>
+        </dependency>
+        
+        <!-- https://mvnrepository.com/artifact/javax.persistence/persistence-api -->
+        <dependency>
+            <groupId>javax.persistence</groupId>
+            <artifactId>persistence-api</artifactId>
+            <version>1.0.2</version>
         </dependency>
         
         <!-- https://mvnrepository.com/artifact/org.hibernate.javax.persistence/hibernate-jpa-2.0-api -->

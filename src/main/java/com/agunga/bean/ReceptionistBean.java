@@ -2,20 +2,15 @@ package com.agunga.bean;
 
 import com.agunga.model.Patient;
 import com.agunga.model.Receptionist;
-import com.agunga.beanI.EmployeeBeanI;
-import com.agunga.beanI.PatientBeanI;
-import com.agunga.beanI.PersonBeanI;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.ejb.Stateless;
 import com.agunga.beanI.ReceptionistBeanI;
-import com.agunga.dao.ConnectionType;
-import com.agunga.dao.MyConectivity;
-import java.sql.Connection;
+import com.agunga.dao.PatientDao;
 import java.util.ArrayList;
-import javax.ejb.EJB;
-import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 /**
  * Created by agunga on 1/18/17.
@@ -23,7 +18,9 @@ import javax.inject.Inject;
 @Stateless(mappedName = "receptionistBean")
 public class ReceptionistBean extends BaseBean implements ReceptionistBeanI {
 
-   
+    @PersistenceContext(unitName = "CISJPA")
+    private EntityManager em;
+
     @Override
     public boolean check(Receptionist receptionist) {
 
@@ -72,7 +69,9 @@ public class ReceptionistBean extends BaseBean implements ReceptionistBeanI {
 
     @Override
     public boolean addPatient(Patient patient) {
-        return patientBean.add(patient);
+        PatientDao pd = new PatientDao(em);
+        return pd.save(patient) != null;
+//        return patientBean.add(patient);
     }
 
     /**

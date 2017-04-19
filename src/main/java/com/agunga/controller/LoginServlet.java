@@ -1,6 +1,8 @@
 package com.agunga.controller;
 
 import com.agunga.beanI.EmployeeBeanI;
+import com.agunga.dbold.MyPersistance;
+import com.agunga.model.Person;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.ejb.EJB;
@@ -23,6 +25,14 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+//        Person p = new Person();
+//        p.setName("Oloo");
+//        p.setDob("12/58/1220");
+//        p.setNationalId("31254883");
+//        p.setPhone("0706091094");
+//
+//        MyPersistance.addPerson(p);
+
         RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
         dispatcher.forward(request, response);
     }

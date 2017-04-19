@@ -1,10 +1,24 @@
 package com.agunga.model;
 
+import java.io.Serializable;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue; 
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.Table;
+
 /**
  * Created by agunga on 1/18/17.
  */
-public class Patient extends Person {
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
+@Table(name = "patients")
+public class Patient extends Person implements Serializable {
 
+    @Id
+    @GeneratedValue //(strategy = GenerationType.AUTO);
+    private long id;
     private String patientId;
     private String checkin;
     private String checkout;

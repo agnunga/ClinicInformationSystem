@@ -1,7 +1,7 @@
 package com.agunga.controller;
 
-import com.agunga.dao.ConnectionType;
-import com.agunga.dao.MyConectivity;
+import com.agunga.dbold.ConnectionType;
+import com.agunga.dbold.MyConectivity;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.inject.Inject;

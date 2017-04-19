@@ -1,16 +1,38 @@
 package com.agunga.model;
 
+import javax.annotation.Generated;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.Table;
+
 /**
  * Created by agunga on 1/18/17.
  */
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
+@Table(name = "persons")
 public class Person {
 
+    @Id
+    @GeneratedValue
+    private long id;
     private String nationalId;
     private String name;
     private String phone;
     private String sex;
     private String dob;
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+    
     public String getNationalId() {
         return nationalId;
     }

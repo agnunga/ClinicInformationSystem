@@ -1,9 +1,18 @@
 package com.agunga.model;
 
+import java.io.Serializable;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.Table;
+
 /**
  * Created by agunga on 1/18/17.
  */
-public class Doctor extends Employee {
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
+@Table(name = "doctors")
+public class Doctor extends Employee implements Serializable {
 
     private String licence_no;
     private String speciality;
