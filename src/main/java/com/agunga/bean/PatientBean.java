@@ -29,7 +29,7 @@ public class PatientBean extends BaseBean implements PatientBeanI {
 
     @Override
     public Patient update(Patient patient) {
-        PatientDao pd = new PatientDao(em); 
+        PatientDao pd = new PatientDao(em);
         return pd.merge(patient);
     }
 
@@ -42,22 +42,22 @@ public class PatientBean extends BaseBean implements PatientBeanI {
 
     @Override
     public Patient diagnose(Patient patient) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return update(patient);
     }
 
     @Override
     public Patient test(Patient patient) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return update(patient);
     }
 
     @Override
     public Patient prescribe(Patient patient) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return update(patient);
     }
 
     @Override
     public Patient dispatchDrugs(Patient patient) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return update(patient);
     }
 
 }

@@ -1,3 +1,4 @@
+<%@page import="com.agunga.beanI.DoctorBeanI"%>
 <%@page import="com.agunga.util.MyUtility"%>
 <%@page import="com.agunga.model.Patient"%>
 <%@page import="com.agunga.beanI.ReceptionistBeanI"%>
@@ -16,7 +17,7 @@
             <table id="example1" class="table table-bordered table-striped">
                 <thead>
                     <tr>
-                        <th>National ID</th>
+                        <!--<th>National ID</th>-->
                         <th>Patient ID</th>
                         <th>Name</th>
                         <th>Phone</th>
@@ -31,14 +32,14 @@
                         if (request.getParameter("id") != null) {
                             id = request.getParameter("id");
                         }
-                        ReceptionistBeanI rbi = (ReceptionistBeanI) request.getAttribute("rbi");
-                        List<Patient> patients = rbi.viewPatients();
+                        DoctorBeanI dbi = (DoctorBeanI) request.getAttribute("dbi");
+                        List<Patient> patients = dbi.viewPatients();
                         Iterator<Patient> iterator = patients.iterator();
                         while (iterator.hasNext()) {
                             Patient patient = iterator.next();
                     %>
                     <tr>
-                        <td><%=patient.getNationalId()%></td>
+                        <!--<td><%=patient.getNationalId()%></td>-->
                         <td><%=patient.getPatientId()%></td>
                         <td><%=patient.getName()%></td>
                         <td><%=patient.getPhone()%></td>
@@ -46,13 +47,13 @@
                         <td><%=patient.getSex()%></td>
                         <td><%=patient.getCheckin()%></td>
                         <td>
-                            <a href="/ClinicInformationSystem/receptionist/update_patient?id=<%=patient.getId()%>">
-                                <button class="btn btn-warning btn-xs icon-edit"> Edit </button>
+                            <a href="/ClinicInformationSystem/doctor/diagnose?id=<%=patient.getId()%>">
+                                <button class="btn btn-warning btn-xs icon-edit"> Diagnose </button>
                             </a>
                         </td>
                         <td>
-                            <a href="/ClinicInformationSystem/receptionist/delete_patient?id=<%=patient.getId()%>">
-                                <button class="btn btn-danger btn-xs icon-edit"> Delete </button>
+                            <a href="/ClinicInformationSystem/doctor/prescribe?id=<%=patient.getId()%>">
+                                <button class="btn btn-info btn-xs icon-edit"> Prescribe </button>
                             </a>
                         </td>
                     </tr>

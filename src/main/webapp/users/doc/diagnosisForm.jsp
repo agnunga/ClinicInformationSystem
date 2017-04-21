@@ -1,32 +1,30 @@
+<%@page import="com.agunga.beanI.DoctorBeanI"%>
 <%@page import="com.agunga.util.MyUtility"%>
 <%@page import="com.agunga.model.Patient"%>
 <%@page import="com.agunga.beanI.PatientBeanI"%>
 
 <%
-    PatientBeanI eb = (PatientBeanI) request.getAttribute("employeeBean");
-    Patient employee = eb.viewById(MyUtility.myParseLong(request.getParameter("id")));
+   DoctorBeanI dbi = (DoctorBeanI) request.getAttribute("dbi");
+    Patient employee = dbi.viewPatient(MyUtility.myParseLong(request.getParameter("id")));
 %>
-<form class="well form-horizontal" action="update_employee" method="post" id="contact_form">
+<form class="well form-horizontal" action="diagnose" method="post" id="contact_form">
     <fieldset>  
         <legend>Record diagnosis</legend> 
 
         Full name: <%= employee.getName()%> 
-        National ID: <%= employee.getNationalId()%> 
-        Phone: <%= employee.getPhone()%>
+        Patient ID: 
+        <%= employee.getPatientId()%>
+        National ID: 
+        <%= employee.getNationalId()%> 
+        Phone: 
+        <%= employee.getPhone()%>
         Gender:
-        Date Of Birth: <%= employee.getDob()%>
+        <%= employee.getSex()%>
+        Date Of Birth: 
+        <%= employee.getDob()%>
 
-        <div class="form-group">
-            <label class="col-md-4 control-label">Patient ID: </label>
-            <div class="col-md-4 inputGroupContainer">
-                <div class="input-group">
-                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                    <input name="employeeNo"
-                           value="<%= employee.getPatientId()%>" class="form-control" type="text" required>
-                </div>
-            </div>
-        </div>
-
+        <input name="id" value="<%= employee.getId()%>"type="hidden" required>
+        
         <div class="form-group">
             <label class="col-md-4 control-label">Diagnosis </label>
             <div class="col-md-4 inputGroupContainer">

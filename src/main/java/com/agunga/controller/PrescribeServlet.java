@@ -1,5 +1,6 @@
 package com.agunga.controller;
 
+import com.agunga.beanI.DoctorBeanI;
 import com.agunga.beanI.ReceptionistBeanI;
 import java.io.IOException;
 
@@ -19,13 +20,13 @@ public class PrescribeServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
     @EJB
-    ReceptionistBeanI rbi;
+    DoctorBeanI dbi;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setAttribute("rbi", rbi);
+        request.setAttribute("dbi", dbi);
         if (request.getParameter("id") != null) {
-            RequestDispatcher rd = request.getRequestDispatcher("/users/doc/updatePatient.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("/users/doc/prescribe.jsp");
             rd.forward(request, response);
         } else {
             request.setAttribute("updated", "Invalid Option. No record selected for update");
@@ -36,17 +37,12 @@ public class PrescribeServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
- 
-        Patient patient = rbi.viewPatient(MyUtility.myParseLong(request.getParameter("id")));
-        
-        patient.setName(request.getParameter("name"));
-        patient.setNationalId(request.getParameter("nationalId"));
-        patient.setDob(request.getParameter("dob"));
-        patient.setPhone(request.getParameter("patient_phone"));
-        patient.setSex(request.getParameter("sex"));
-        patient.setPatientId(request.getParameter("patientId"));
 
-        if (rbi.updatePatient(patient) != null) {
+        Patient patient = dbi.viewPatient(MyUtility.myParseLong(request.getParameter("id")));
+        patient.setPrescription(request.getParameter("prescription"));
+        request.setAttribute("dbi", dbi);
+
+        if (dbi.prescribe(patient) != null) {
             request.setAttribute("updated", "Updated successfull.");
             RequestDispatcher rd = request.getRequestDispatcher("/users/doc/viewPatients.jsp");
             rd.forward(request, response);

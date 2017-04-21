@@ -1,5 +1,6 @@
 package com.agunga.controller;
 
+import com.agunga.beanI.DoctorBeanI;
 import com.agunga.beanI.ReceptionistBeanI;
 import java.io.IOException;
 
@@ -19,11 +20,11 @@ public class DiagnosisServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
     @EJB
-    ReceptionistBeanI rbi;
+    DoctorBeanI dbi;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setAttribute("rbi", rbi);
+        request.setAttribute("dbi", dbi);
         if (request.getParameter("id") != null) {
             RequestDispatcher rd = request.getRequestDispatcher("/users/doc/diagnose.jsp");
             rd.forward(request, response);
@@ -36,12 +37,12 @@ public class DiagnosisServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
- 
-        Patient patient = rbi.viewPatient(MyUtility.myParseLong(request.getParameter("id")));
-          
-        patient.setPatientId(request.getParameter("diagnose"));
 
-        if (rbi.updatePatient(patient) != null) {
+        Patient patient = dbi.viewPatient(MyUtility.myParseLong(request.getParameter("id")));
+        patient.setDiagnosis(request.getParameter("diagnosis"));
+        request.setAttribute("dbi", dbi);
+
+        if (dbi.diagnose(patient) != null) {
             request.setAttribute("updated", "Updated successfull.");
             RequestDispatcher rd = request.getRequestDispatcher("/users/doc/viewPatients.jsp");
             rd.forward(request, response);
