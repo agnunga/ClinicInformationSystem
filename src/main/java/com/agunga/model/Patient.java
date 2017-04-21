@@ -7,6 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 /**
  * Created by agunga on 1/18/17.
@@ -16,9 +17,10 @@ import javax.persistence.Table;
 @Table(name = "patients")
 public class Patient extends Person implements Serializable {
 
-    @Id
-    @GeneratedValue //(strategy = GenerationType.AUTO);
-    private long id;
+//    @Id
+//    @GeneratedValue //(strategy = GenerationType.AUTO);
+//    private long id; 
+    
     private String patientId;
     private String checkin;
     private String checkout;
@@ -28,6 +30,7 @@ public class Patient extends Person implements Serializable {
     private String prescription;
     private String drugs;
 
+    
     public String getPatientId() {
         return patientId;
     }

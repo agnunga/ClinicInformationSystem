@@ -1,16 +1,18 @@
-<%@page import="com.agunga.beansI.ReceptionistBeanI"%>
-<%@page import="com.agunga.models.Patient"%>
+<%@page import="com.agunga.util.MyUtility"%>
+<%@page import="com.agunga.model.Patient"%>
+<%@page import="com.agunga.beanI.ReceptionistBeanI"%>
 <%@page import="java.util.Iterator"%>
-<form class="well form-horizontal" action="update_patient" method="post"
-      id="contact_form">
+
+<%
+    ReceptionistBeanI rbi = (ReceptionistBeanI) request.getAttribute("rbi");
+    Patient patient = rbi.viewPatient(MyUtility.myParseLong(request.getParameter("id")));
+%>
+<form class="well form-horizontal" action="update_patient" method="post" id="contact_form">
     <fieldset>
         <!-- Form Name -->
         <legend>Update Patient Details</legend>
-        <%
-            String id = request.getParameter("id");
-            ReceptionistBeanI rbi = (ReceptionistBeanI) request.getAttribute("rbi");
-            Patient patient = rbi.viewPatient(id).get(0);
-        %>
+        <input type="hidden" name="id" readonly=""  value="<%= patient.getId()%>" required>
+
         <div class="form-group">
             <label class="col-md-4 control-label">Patient ID: </label>
             <div class="col-md-4 inputGroupContainer">
@@ -43,18 +45,20 @@
             <div class="col-md-4 inputGroupContainer">
                 <div class="input-group">
                     <span class="input-group-addon"><i
-                            class="glyphicon glyphicon-user"></i></span> <input name="patient_phone"
-                                                                        placeholder="Phone" value="<%=patient.getPhone()%>"
-                                                                        class="form-control" type="text" required maxlength="15">
+                            class="glyphicon glyphicon-user"></i></span> 
+                    <input name="patient_phone"
+                           placeholder="Phone" value="<%=patient.getPhone()%>"
+                           class="form-control" type="text" required maxlength="15">
                 </div>
             </div>
         </div>
         <div class="form-group">
             <label class="col-md-4 control-label">Gender:</label>
             <div class="col-md-4">
-                <span class="radio"> <label> <input type="radio"
-                                                    name="sex" value="male" required
-                                                    <%=(patient.getSex().equals("male") ? "checked" : "")%>/>
+                <span class="radio"> <label> 
+                        <input type="radio"
+                               name="sex" value="male" required
+                               <%=(patient.getSex().equals("male") ? "checked" : "")%>/>
                         Male
                     </label>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <label> <input
                             type="radio" name="sex" value="female" required
@@ -68,9 +72,10 @@
             <div class="col-md-4 inputGroupContainer">
                 <div class="input-group">
                     <span class="input-group-addon"><i
-                            class="glyphicon glyphicon-user"></i></span> <input name="dob"
-                                                                        placeholder="Date of Birth" value="<%=patient.getDob()%>"
-                                                                        class="form-control" type="text" required maxlength="20">
+                            class="glyphicon glyphicon-user"></i></span> 
+                    <input name="dob"
+                           placeholder="Date of Birth" value="<%=patient.getDob()%>"
+                           class="form-control" type="text" required maxlength="20">
                 </div>
             </div>
         </div>

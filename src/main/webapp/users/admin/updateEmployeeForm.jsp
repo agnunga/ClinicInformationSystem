@@ -1,15 +1,26 @@
 
-<form class="well form-horizontal" action="register_employee"
-      method="post" id="contact_form">
+<%@page import="com.agunga.util.MyUtility"%>
+<%@page import="com.agunga.model.Employee"%>
+<%@page import="com.agunga.beanI.EmployeeBeanI"%>
+
+<%
+    EmployeeBeanI eb = (EmployeeBeanI) request.getAttribute("employeeBean");
+    Employee employee = eb.viewEmployee(MyUtility.myParseLong(request.getParameter("id")));
+%>
+<form class="well form-horizontal" action="update_employee" method="post" id="contact_form">
     <fieldset> 
         <!-- Form Name -->
+        <input type="hidden" name="id" readonly=""  value="<%= employee.getId()%>" required>
+
         <legend>Register Receptionist</legend> 
         <div class="form-group">
             <label class="col-md-4 control-label">Full Name: </label>
             <div class="col-md-4 inputGroupContainer">
                 <div class="input-group">
                     <span class="input-group-addon"><i
-                            class="glyphicon glyphicon-user"></i></span> <input name="name" placeholder="Name" class="form-control" type="text" required>
+                            class="glyphicon glyphicon-user"></i>
+                    </span> 
+                    <input name="name"   value="<%= employee.getName()%>"  class="form-control"  type="text" required>
                 </div>
             </div>
         </div>
@@ -18,9 +29,10 @@
             <div class="col-md-4 inputGroupContainer">
                 <div class="input-group">
                     <span class="input-group-addon"><i
-                            class="glyphicon glyphicon-user"></i></span> <input name="nationalId"
-                                                                        placeholder="National ID" class="form-control" type="text"
-                                                                        maxlength="8" required>
+                            class="glyphicon glyphicon-user"></i></span> 
+                    <input name="nationalId"
+                           value="<%= employee.getNationalId()%>" class="form-control" type="text"
+                           maxlength="8" required>
                 </div>
             </div>
         </div>
@@ -29,18 +41,19 @@
             <div class="col-md-4 inputGroupContainer">
                 <div class="input-group">
                     <span class="input-group-addon"><i
-                            class="glyphicon glyphicon-user"></i></span> <input name="phone_no"
-                                                                        placeholder="Phone" class="form-control" type="text" required>
+                            class="glyphicon glyphicon-user"></i></span>
+                    <input name="phone_no"
+                           value="<%= employee.getPhone()%>" class="form-control" type="text" required>
                 </div>
             </div>
         </div>
         <div class="form-group">
             <label class="col-md-4 control-label">Gender:</label>
             <div class="col-md-4">
-                <span class="radio"> <label> <input type="radio"
-                                                    name="sex" value="male" required /> Male
-                    </label>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <label> <input
-                            type="radio" name="sex" value="female" required /> Female
+                <span class="radio"> <label>
+                        <input type="radio" name="sex" value="male" required /> Male
+                    </label>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <label>
+                        <input type="radio" name="sex" value="female" required /> Female
                     </label>
                 </span>
             </div>
@@ -50,9 +63,10 @@
             <div class="col-md-4 inputGroupContainer">
                 <div class="input-group">
                     <span class="input-group-addon"><i
-                            class="glyphicon glyphicon-user"></i></span> <input name="dob"
-                                                                        placeholder="Date of Birth" class="form-control" type="text"
-                                                                        required>
+                            class="glyphicon glyphicon-user"></i></span>
+                    <input name="dob"
+                           value="<%= employee.getDob()%>" class="form-control" type="text"
+                           required>
                 </div>
             </div>
         </div>
@@ -61,10 +75,10 @@
             <label class="col-md-4 control-label">Employee No: </label>
             <div class="col-md-4 inputGroupContainer">
                 <div class="input-group">
-                    <span class="input-group-addon"><i
-                            class="glyphicon glyphicon-user"></i></span> <input name="employeeNo"
-                                                                        placeholder="Employee No" class="form-control" type="text"
-                                                                        required>
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                    <input name="employeeNo"
+                           value="<%= employee.getEmployeeNo()%>" class="form-control" type="text"
+                           required>
                 </div>
             </div>
         </div>
@@ -73,9 +87,10 @@
             <div class="col-md-4 inputGroupContainer">
                 <div class="input-group">
                     <span class="input-group-addon"><i
-                            class="glyphicon glyphicon-user"></i></span> <input name="dateEmployed"
-                                                                        placeholder="Date Employed" class="form-control" type="text"
-                                                                        required>
+                            class="glyphicon glyphicon-user"></i></span>
+                    <input name="dateEmployed"
+                           value="<%= employee.getDateEmployed()%>" class="form-control" type="text"
+                           required>
                 </div>
             </div>
         </div>
@@ -84,8 +99,9 @@
             <div class="col-md-4 inputGroupContainer">
                 <div class="input-group">
                     <span class="input-group-addon"><i
-                            class="glyphicon glyphicon-user"></i></span> <input name="salary"
-                                                                        placeholder="Salary" class="form-control" type="text" required>
+                            class="glyphicon glyphicon-user"></i></span>
+                    <input name="salary"
+                           value="<%= employee.getSalary()%>" class="form-control" type="text" required>
                 </div>
             </div>
         </div>
@@ -95,15 +111,14 @@
             <div class="col-md-4 selectContainer">
                 <div class="input-group">
                     <span class="input-group-addon"><i
-                            class="glyphicon glyphicon-list"></i></span> <select name="title"
-                                                                         required="" class="form-control selectpicker">
+                            class="glyphicon glyphicon-list"></i></span> 
+                    <select name="title" required="" class="form-control selectpicker">
                         <option>-Select Role-</option>
                         <option value="r">Receptionist</option>
                         <option value="n">Nurse</option>
                         <option value="l">Lab Tech</option>
                         <option value="d">Doctor</option>
-                        <option value="a">Admininistor</option>
-
+                        <option value="a">Administrator</option>
                     </select>
                 </div>
             </div>
@@ -127,7 +142,7 @@
             <label class="col-md-4 control-label"></label>
             <div class="col-md-4">
                 <button type="submit" class="btn btn-warning">
-                    Register Patient <span class="glyphicon glyphicon-send"></span>
+                    Update Employee <span class="glyphicon glyphicon-send"></span>
                 </button>
             </div>
         </div>

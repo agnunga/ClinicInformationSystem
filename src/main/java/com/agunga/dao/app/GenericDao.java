@@ -1,4 +1,4 @@
-package com.agunga.containerManDao;
+package com.agunga.dao.app;
 
 import com.agunga.util.JLogger;
 import javax.persistence.EntityManager;

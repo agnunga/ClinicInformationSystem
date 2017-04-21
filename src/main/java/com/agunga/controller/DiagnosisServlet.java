@@ -14,8 +14,8 @@ import com.agunga.model.Patient;
 import com.agunga.util.MyUtility;
 import javax.ejb.EJB;
 
-@WebServlet("/receptionist/update_patient")
-public class UpdatePatientServlet extends HttpServlet {
+@WebServlet("/doctor/diagnose")
+public class DiagnosisServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
     @EJB
@@ -25,11 +25,11 @@ public class UpdatePatientServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setAttribute("rbi", rbi);
         if (request.getParameter("id") != null) {
-            RequestDispatcher rd = request.getRequestDispatcher("/users/rec/updatePatient.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("/users/doc/diagnose.jsp");
             rd.forward(request, response);
         } else {
             request.setAttribute("updated", "Invalid Option. No record selected for update");
-            RequestDispatcher rd = request.getRequestDispatcher("/users/rec/viewPatients.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("/users/doc/viewPatients.jsp");
             rd.forward(request, response);
         }
     }
@@ -38,21 +38,16 @@ public class UpdatePatientServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
  
         Patient patient = rbi.viewPatient(MyUtility.myParseLong(request.getParameter("id")));
-        
-        patient.setName(request.getParameter("name"));
-        patient.setNationalId(request.getParameter("nationalId"));
-        patient.setDob(request.getParameter("dob"));
-        patient.setPhone(request.getParameter("patient_phone"));
-        patient.setSex(request.getParameter("sex"));
-        patient.setPatientId(request.getParameter("patientId"));
+          
+        patient.setPatientId(request.getParameter("diagnose"));
 
         if (rbi.updatePatient(patient) != null) {
             request.setAttribute("updated", "Updated successfull.");
-            RequestDispatcher rd = request.getRequestDispatcher("/users/rec/viewPatients.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("/users/doc/viewPatients.jsp");
             rd.forward(request, response);
         } else {
             request.setAttribute("updated", "Update failed.");
-            RequestDispatcher rd = request.getRequestDispatcher("/users/rec/viewPatients.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("/users/doc/viewPatients.jsp");
             rd.forward(request, response);
         }
     }

@@ -1,5 +1,5 @@
 package com.agunga.model;
- 
+
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
@@ -15,9 +15,18 @@ import javax.persistence.Table;
 public class Employee extends Person implements Serializable {
 
     private String employeeNo;
+    private String password;
     private String dateEmployed;
     private String salary;
     private String title;
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     public String getEmployeeNo() {
         return employeeNo;

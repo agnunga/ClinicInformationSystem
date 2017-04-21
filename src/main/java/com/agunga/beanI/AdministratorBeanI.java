@@ -7,6 +7,7 @@ package com.agunga.beanI;
 
 import com.agunga.model.Employee;
 import java.util.ArrayList;
+import java.util.List;
 import javax.ejb.Local;
 
 /**
@@ -16,7 +17,10 @@ import javax.ejb.Local;
 @Local
 public interface AdministratorBeanI {
 
-    public boolean addEmployee(Employee employee);
+    public Employee addEmployee(Employee employee);
 
-    public ArrayList<Employee> viewEmployees();
+    public List<Employee> viewEmployees();
+
+    public Employee viewEmployee(long id);
+
 }

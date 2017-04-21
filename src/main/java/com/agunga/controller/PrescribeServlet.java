@@ -14,8 +14,8 @@ import com.agunga.model.Patient;
 import com.agunga.util.MyUtility;
 import javax.ejb.EJB;
 
-@WebServlet("/receptionist/update_patient")
-public class UpdatePatientServlet extends HttpServlet {
+@WebServlet("/doctor/prescribe")
+public class PrescribeServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
     @EJB
@@ -25,11 +25,11 @@ public class UpdatePatientServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setAttribute("rbi", rbi);
         if (request.getParameter("id") != null) {
-            RequestDispatcher rd = request.getRequestDispatcher("/users/rec/updatePatient.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("/users/doc/updatePatient.jsp");
             rd.forward(request, response);
         } else {
             request.setAttribute("updated", "Invalid Option. No record selected for update");
-            RequestDispatcher rd = request.getRequestDispatcher("/users/rec/viewPatients.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("/users/doc/viewPatients.jsp");
             rd.forward(request, response);
         }
     }
@@ -48,11 +48,11 @@ public class UpdatePatientServlet extends HttpServlet {
 
         if (rbi.updatePatient(patient) != null) {
             request.setAttribute("updated", "Updated successfull.");
-            RequestDispatcher rd = request.getRequestDispatcher("/users/rec/viewPatients.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("/users/doc/viewPatients.jsp");
             rd.forward(request, response);
         } else {
             request.setAttribute("updated", "Update failed.");
-            RequestDispatcher rd = request.getRequestDispatcher("/users/rec/viewPatients.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("/users/doc/viewPatients.jsp");
             rd.forward(request, response);
         }
     }

@@ -6,13 +6,15 @@
 package com.agunga.ws;
 
 import com.agunga.bean.ReceptionistBean;
-import com.agunga.model.Patient;
+import com.agunga.model.Patient; 
 import com.agunga.model.ResponseObject;
-import java.util.ArrayList;
+import com.agunga.util.MyUtility;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -31,35 +33,35 @@ public class ReceptionistREST {
     ReceptionistBean receptionistBean;
 
     @GET
-    @Path("/view_patient/{param}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Patient viewSinglePatientDetails(@PathParam("param") String id) {
-//        Response.status(200).entity("Patient registration failed").build();
-        return receptionistBean.viewPatient(id).get(0);
-    }
-
-    @GET
     @Path("/add_patient/{param}")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public ResponseObject addPatient(Patient patient) {
+    public Response addPatient(Patient patient) {
         ResponseObject responseObject = new ResponseObject();
-        return responseObject;
+        return Response.status(200).entity(responseObject).build();
     }
 
     @GET
     @Path("/view/{param}")
     @Produces(MediaType.APPLICATION_JSON)
-    public ArrayList<Patient> viewPatientsDetails(@PathParam("param") String id) {
-        ArrayList<Patient> patients = receptionistBean.viewPatient(id);
-        return patients;
+    public Response viewPatientsDetails(@PathParam("param") String id) {
+        return Response.status(200).entity(receptionistBean.viewPatient(MyUtility.myParseLong(id))).build();
     }
 
-    @PUT
+    @GET
+    @Path("/view_all")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response viewPatientsDetails() {
+        List<Patient> patients = receptionistBean.viewPatients();
+        return Response.status(200).entity(patients).build();
+    }
+
+    @POST
     @Path("/update/{param}")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response updatePatintDetails(Patient patient) {
-        if (receptionistBean.updatePatient(patient)) {
+    public Response updatePatintDetails(@PathParam("param") String id) {
+        Patient p = new Patient();
+        if (receptionistBean.updatePatient(p) != null) {
             return Response.status(200).entity("patient updated").build();
         } else {
             return Response.status(200).entity("Update failed").build();
@@ -68,8 +70,8 @@ public class ReceptionistREST {
 
     @DELETE
     @Path("/delete/{param}")
-    public Response deletePatientDetails(String id) {
-        if (receptionistBean.deletePatient(id)) {
+    public Response deletePatientDetails(@PathParam("param") String id) {
+        if (receptionistBean.deletePatient(MyUtility.myParseLong(id))) {
             return Response.status(200).entity("Patient deleted").build();
         } else {
             return Response.status(200).entity("Failed to delete").build();

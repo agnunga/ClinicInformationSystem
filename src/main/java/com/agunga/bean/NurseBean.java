@@ -12,6 +12,7 @@ public class NurseBean extends BaseBean implements NurseBeanI {
 
     @Override
     public void dispatchDrugs(Patient patient) {
-
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
 }

@@ -8,7 +8,7 @@ package com.agunga.ws;
 import com.agunga.beanI.AdministratorBeanI;
 import com.agunga.model.Employee;
 import com.agunga.model.ResponseObject;
-import java.util.ArrayList;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -30,7 +30,7 @@ public class AdministratorREST {
     @Produces(MediaType.APPLICATION_JSON)
     public ResponseObject registerSpecificEmployee(Employee employee) {
         ResponseObject responseObject = new ResponseObject();
-        if (administratorBean.addEmployee(employee)) {
+        if (administratorBean.addEmployee(employee) != null) {
             responseObject.setStatus(true);
             responseObject.setMessage("Success - registered");
             responseObject.setData(employee);
@@ -45,16 +45,16 @@ public class AdministratorREST {
     @GET
     @Path("/view_employees")
     @Produces(MediaType.APPLICATION_JSON)
-    public ArrayList<Employee> viewEmployees() {
-        ArrayList<Employee> employees = administratorBean.viewEmployees();
+    public List<Employee> viewEmployees() {
+        List<Employee> employees = administratorBean.viewEmployees();
         return employees;
     }
 
     @GET
-    @Path("/view_employee/{param}")
+    @Path("/view_employee/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Employee viewEmployees(@PathParam("param") int index) {
-        ArrayList<Employee> employees = administratorBean.viewEmployees();
+    public Employee viewEmployees(@PathParam("id") int index) {
+        List<Employee> employees = administratorBean.viewEmployees();
         if (index < employees.size()) {
             return employees.get(index);
         } else {

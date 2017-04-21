@@ -1,15 +1,16 @@
 package com.agunga.util;
 
-
 import java.io.*;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Formatter;
 import java.util.Scanner;
 
 /**
- * Created by agunga on 1/17/17.
- * This Class contains 2 copy methods
+ * Created by agunga on 1/17/17. This Class contains 2 copy methods
  */
-
 public class MyUtility {
+
     public static void myPrintln(Object object) {
         System.out.println(object);
     }
@@ -83,11 +84,11 @@ public class MyUtility {
         }
     }
 
-    public static String readFile(String filename){
+    public static String readFile(String filename) {
 
-        String output="";
-        if(filename.equals("0")){
-        }else {
+        String output = "";
+        if (filename.equals("0")) {
+        } else {
             try (BufferedReader bufferedReader = new BufferedReader(new FileReader(filename))) {
                 int i;
                 while ((i = bufferedReader.read()) != -1) {
@@ -102,15 +103,49 @@ public class MyUtility {
         return output;
     }
 
-    public static int myScanInt(){
+    public static int myScanInt() {
         int my_number = 0;
         try {
             my_number = Integer.parseInt(MyUtility.myScanner().nextLine());
-        }catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             MyUtility.myPrintln("Invalid Input,only numeric figures allowed. Try again");
             myScanInt();
         }
         return my_number;
     }
-}
 
+    public static long myParseLong(String s) {
+        long my_number = 0;
+        try {
+            my_number = Long.parseLong(s);
+        } catch (NumberFormatException e) {
+        }
+        return my_number;
+    }
+
+    public static String encryptPassword(String password) {
+        String sha1 = "";
+        try {
+            MessageDigest crypt = MessageDigest.getInstance("SHA-1");
+            crypt.reset();
+            crypt.update(password.getBytes("UTF-8"));
+            sha1 = byteToHex(crypt.digest());
+        } catch (NoSuchAlgorithmException e) {
+
+        } catch (UnsupportedEncodingException e) {
+
+        }
+        return sha1;
+    }
+
+    private static String byteToHex(final byte[] hash) {
+        String result;
+        try (Formatter formatter = new Formatter()) {
+            for (byte b : hash) {
+                formatter.format("%02x", b);
+            }
+            result = formatter.toString();
+        }
+        return result;
+    }
+}

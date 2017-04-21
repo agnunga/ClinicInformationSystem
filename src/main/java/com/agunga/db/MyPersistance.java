@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.agunga.dbold;
+package com.agunga.db;
 
 import com.agunga.model.Person;
 import javax.persistence.EntityManager;

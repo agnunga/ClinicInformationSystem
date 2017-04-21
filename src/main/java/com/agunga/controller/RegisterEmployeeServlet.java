@@ -1,7 +1,8 @@
 package com.agunga.controller;
- 
+
 import com.agunga.beanI.AdministratorBeanI;
 import com.agunga.model.Employee;
+import com.agunga.util.MyUtility;
 import java.io.IOException;
 import javax.ejb.EJB;
 
@@ -40,9 +41,11 @@ public class RegisterEmployeeServlet extends HttpServlet {
         emp.setDateEmployed(request.getParameter("dateEmployed"));
         emp.setSalary(request.getParameter("salary"));
         emp.setTitle(request.getParameter("title"));
+        //Encrypting password
+        emp.setPassword(MyUtility.encryptPassword(request.getParameter("nationalId")));
         char t = emp.getTitle().charAt(0);
 
-        if (administratorBean.addEmployee(emp)) {
+        if (administratorBean.addEmployee(emp) != null) {
             switch (t) {
                 case 'd': {
                     RequestDispatcher rd = request.getRequestDispatcher("/users/admin/registerEmployee.jsp");

@@ -3,20 +3,21 @@ package com.agunga.beanI;
 import com.agunga.model.Patient;
 import com.agunga.model.Receptionist;
 import java.util.ArrayList;
+import java.util.List;
 import javax.ejb.Local;
 
 @Local
-public interface ReceptionistBeanI{
+public interface ReceptionistBeanI {
 
-    public boolean check(Receptionist receptionist);
+    public Receptionist add(Receptionist receptionist);
 
-    public boolean add(Receptionist receptionist);
+    public Patient addPatient(Patient patient);
 
-    public boolean addPatient(Patient patient);
+    public List<Patient> viewPatients();
 
-    public ArrayList<Patient> viewPatient(String patientId);
+    public Patient viewPatient(long id);
 
-    public boolean updatePatient(Patient patient);
+    public Patient updatePatient(Patient patient);
 
-    public boolean deletePatient(String id);
+    public boolean deletePatient(long id);
 }

@@ -1,12 +1,10 @@
 package com.agunga.bean;
 
-import com.agunga.dao.AdministratorDao;
-import java.util.ArrayList;
+import com.agunga.dao.AdministratorDao; 
 import javax.ejb.Stateless;
 import com.agunga.beanI.AdministratorBeanI;
 import com.agunga.model.Employee;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import java.util.List; 
 
 /**
  * Created by agunga on 1/18/17.
@@ -14,22 +12,24 @@ import javax.persistence.PersistenceContext;
 @Stateless(mappedName = "administratorBean")
 public class AdministratorBean extends BaseBean implements AdministratorBeanI {
 
-    @PersistenceContext(unitName = "CISJPA")
-    private EntityManager em;
-
 //    EntityManagerFactory emf = Persistence.createEntityManagerFactory(
 //            "jdbc:mysql://localhost:3306/CISJPA;user=root;password="
 //    );
 //    EntityManager em = emf.createEntityManager();
     @Override
-    public boolean addEmployee(Employee employee) {
+    public Employee addEmployee(Employee employee) {
         AdministratorDao ad = new AdministratorDao(em);
-        return ad.save(employee) != null;
+        return ad.save(employee);
     }
 
     @Override
-    public ArrayList<Employee> viewEmployees() {
-        return employeeBean.view();
+    public List<Employee> viewEmployees() {
+        return employeeBean.viewEmployees();
+    }
+
+    @Override
+    public Employee viewEmployee(long id) {
+        return employeeBean.viewEmployee(id);
     }
 
 }

@@ -1,5 +1,6 @@
 package com.agunga.beanI;
 
+import com.agunga.model.Patient;
 import javax.ejb.Local;
 
 /**
@@ -8,7 +9,7 @@ import javax.ejb.Local;
 @Local
 public interface DoctorBeanI {
 
-    public void diagnose();
+    public Patient diagnose(Patient p);
 
-    public void prescribe();
+    public Patient prescribe(Patient p);
 }

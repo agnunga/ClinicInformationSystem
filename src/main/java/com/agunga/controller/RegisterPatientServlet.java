@@ -1,4 +1,5 @@
-package com.agunga.controller; 
+package com.agunga.controller;
+
 import com.agunga.beanI.ReceptionistBeanI;
 import com.agunga.model.Patient;
 import java.io.IOException;
@@ -28,7 +29,7 @@ public class RegisterPatientServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        PrintWriter out = response.getWriter();
+
         Patient patient = new Patient();
         patient.setName(request.getParameter("name"));
         patient.setNationalId(request.getParameter("nationalId"));
@@ -38,7 +39,7 @@ public class RegisterPatientServlet extends HttpServlet {
 
         patient.setPatientId(request.getParameter("patientId"));
 
-        if (receptionistBean.addPatient(patient)) {
+        if (receptionistBean.addPatient(patient) != null) {
             request.setAttribute("message", "Success! Patient registered, Register another patient.");
             RequestDispatcher rd = request.getRequestDispatcher("/users/rec/registerPatient.jsp");
             rd.forward(request, response);

@@ -1,11 +1,16 @@
 <%@page import="javax.ejb.EJB"%>
-<%@page import="com.agunga.beansI.EmployeeBeanI"%>
-<%@page import="com.agunga.models.Employee"%> 
+<%@page import="com.agunga.model.Employee"%>
+<%@page import="com.agunga.beanI.EmployeeBeanI"%>
 <%@page import="java.util.Iterator"%>
 <div class="col-xs-12"> 
     <div class="box-body">
         <table id="example1" class="table table-bordered table-striped">
             <thead>
+                <%
+                    if (request.getAttribute("updated") != null) {
+                        out.print("Message: " + request.getAttribute("updated"));
+                    }
+                %>
                 <tr>
                     <th>National ID</th>
                     <th>Employee No</th>
@@ -17,12 +22,15 @@
                     <th>Date Employed</th>
                 </tr>
             </thead>
-            <tbody> 
-                <%
+            <tbody>  
+                <%    
                     EmployeeBeanI eb = (EmployeeBeanI) request.getAttribute("employeeBean");
-                    Iterator<Employee> iterator = eb.view().iterator();
-                    while (iterator.hasNext()) {
-                        Employee e = iterator.next();
+                    if (eb == null) {
+                        out.print(null + " Null eb");
+                    } else {
+                        Iterator<Employee> iterator = eb.viewEmployees().iterator();
+                        while (iterator.hasNext()) {
+                            Employee e = iterator.next();
                 %>
                 <tr>
                     <td><%=e.getNationalId()%></td>
@@ -34,12 +42,18 @@
                     <td><%=e.getTitle()%></td>
                     <td><%=e.getDateEmployed()%></td>
                     <td>
-                        <a href="update_employee?id=<%=e.getNationalId()%>">
+                        <a href="update_employee?id=<%=e.getId()%>">
                             <button class="btn btn-warning btn-xs icon-edit">Edit</button>
+                        </a>
+                    </td>
+                    <td>
+                        <a href="delete_employee?id=<%=e.getId()%>">
+                            <button class="btn btn-danger btn-xs icon-trash">Delete</button>
                         </a>
                     </td>
                 </tr>
                 <%
+                        }
                     }
                 %>
             </tbody>

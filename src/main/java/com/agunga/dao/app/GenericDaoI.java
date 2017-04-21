@@ -1,4 +1,4 @@
-package com.agunga.containerManDao;
+package com.agunga.dao.app;
 
 import java.io.Serializable;
 import java.util.List;

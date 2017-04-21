@@ -1,4 +1,4 @@
-package com.agunga.dbold;
+package com.agunga.db;
 
 import java.sql.*;
 

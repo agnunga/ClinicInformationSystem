@@ -1,7 +1,7 @@
 package com.agunga.controller;
 
-import com.agunga.beanI.EmployeeBeanI; 
-import java.io.IOException; 
+import com.agunga.beanI.EmployeeBeanI;
+import java.io.IOException;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;

@@ -1,8 +1,9 @@
 package com.agunga.controller;
 
 import com.agunga.beanI.EmployeeBeanI;
-import com.agunga.dbold.MyPersistance;
+import com.agunga.db.MyPersistance;
 import com.agunga.model.Person;
+import com.agunga.util.MyUtility;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.ejb.EJB;
@@ -42,7 +43,8 @@ public class LoginServlet extends HttpServlet {
 
         PrintWriter out = response.getWriter();
         String employeeno = (request.getParameter("employeeNo"));
-        String password = (request.getParameter("password"));
+        //Encrypt input(password) before setting
+        String password = (MyUtility.encryptPassword(request.getParameter("password")));
 
         String[] role = eb.logIn(employeeno, password);
         out.print("Role is: " + role[0]);

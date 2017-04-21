@@ -4,10 +4,10 @@ import com.agunga.model.Person;
 import javax.ejb.Local;
 
 @Local
-public interface PersonBeanI{
+public interface PersonBeanI {
 
-    public boolean check(String nationalId);
+    Person findById(long id);
 
-    boolean add(Person person);
+    Person add(Person person);
 
 }

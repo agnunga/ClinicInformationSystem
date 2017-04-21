@@ -4,9 +4,7 @@ import com.agunga.util.JLogger;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceException;
 import java.io.Serializable;
-import java.util.List; 
-import javax.annotation.Resource;
-import javax.transaction.UserTransaction;
+import java.util.List;   
 
 /**
  * Created by Administrator on 3/23/2017.
@@ -20,8 +18,8 @@ public class GenericDao<T, PK extends Serializable> implements GenericDaoI<T, PK
     private EntityManager entityManager;
     private JLogger jLogger;
 
-    @Resource
-    UserTransaction utx;
+//    @Resource
+//    UserTransaction utx;
     
     public GenericDao(Class<T> entityClass, EntityManager entityManager) {
         this.entityClass = entityClass;
@@ -32,7 +30,8 @@ public class GenericDao<T, PK extends Serializable> implements GenericDaoI<T, PK
     @Override
     public T save(T t) {
         try {
-//            this.entityManager.getTransaction().begin();
+//            this.entityManager.getTransaction()
+//            utx.begin();
             this.entityManager.persist(t);
 //            this.entityManager.getTransaction().commit();
             return t;

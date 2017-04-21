@@ -1,27 +1,27 @@
 package com.agunga.beanI;
 
 import com.agunga.model.Patient;
-import java.util.ArrayList;
+import java.util.List;
 import javax.ejb.Local;
 
 @Local
-public interface PatientBeanI{
+public interface PatientBeanI {
 
-    public boolean check(String nationalId);
+    public Patient add(Patient patient);
 
-    public boolean add(Patient patient);
+    public List<Patient> viewAll();
 
-    public ArrayList<Patient> view(String patientId);
+    public Patient viewById(long id);
 
-    public boolean update(Patient patient);
+    public Patient update(Patient patient);
 
-    public boolean delete(String id);
+    public boolean delete(long id);
 
-    public void diagnose(Patient patient);
+    public Patient diagnose(Patient patient);
 
-    public void test(Patient patient);
+    public Patient test(Patient patient);
 
-    public void prescribe(Patient patient);
+    public Patient prescribe(Patient patient);
 
-    public void dispatchDrugs(Patient patient);
+    public Patient dispatchDrugs(Patient patient);
 }

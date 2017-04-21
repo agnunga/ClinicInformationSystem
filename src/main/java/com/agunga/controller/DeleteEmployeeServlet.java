@@ -1,8 +1,10 @@
 package com.agunga.controller;
 
-import com.agunga.beanI.ReceptionistBeanI;
+import com.agunga.beanI.EmployeeBeanI;
+import com.agunga.model.Employee;
+import com.agunga.util.MyUtility;
 import java.io.IOException;
-
+import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,31 +12,27 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.agunga.model.Patient;
-import com.agunga.util.MyUtility;
-import javax.ejb.EJB;
-
-@WebServlet("/receptionist/delete_patient")
-public class DeletePatientServlet extends HttpServlet {
+@WebServlet("/admin/delete_employee")
+public class DeleteEmployeeServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
-
     @EJB
-    ReceptionistBeanI rbi;
+    EmployeeBeanI employeeBean;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setAttribute("rbi", rbi);
+
+        request.setAttribute("employeeBean", employeeBean);
 
         if (request.getParameter("id") != null) {
-            if (rbi.deletePatient(MyUtility.myParseLong(request.getParameter("id")))) {
+            if (employeeBean.delete(MyUtility.myParseLong(request.getParameter("id")))) {
                 request.setAttribute("deleted", "Deleted successfully");
-                RequestDispatcher rd = request.getRequestDispatcher("/users/rec/viewPatients.jsp");
+                RequestDispatcher rd = request.getRequestDispatcher("/users/admin/viewEmployees.jsp");
                 rd.forward(request, response);
             }
         } else {
             request.setAttribute("deleted", "Deletion failed");
-            RequestDispatcher rd = request.getRequestDispatcher("/users/rec/viewPatients.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("/users/admin/viewEmployees.jsp");
             rd.forward(request, response);
         }
     }
@@ -43,4 +41,10 @@ public class DeletePatientServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
     }
+
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+    }
+
 }
