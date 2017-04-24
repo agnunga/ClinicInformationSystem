@@ -7,29 +7,26 @@ package com.agunga.bean;
 
 import com.agunga.beanI.EmployeeBeanI;
 import com.agunga.beanI.PatientBeanI;
-import com.agunga.beanI.PersonBeanI;
-import com.agunga.db.ConnectionType;
+import com.agunga.beanI.PersonBeanI; 
 import com.agunga.db.MyConectivity;
 import com.agunga.db.MysqlDbUtil;
 import java.sql.Connection;
-import javax.ejb.EJB;
-import javax.inject.Inject;
+import javax.ejb.EJB; 
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import javax.persistence.EntityManagerFactory; 
+import javax.persistence.PersistenceUnit;
 
 /**
  *
  * @author agunga
  */
 public class BaseBean {
+ 
 
-//    @Inject
-//    @ConnectionType(ConnectionType.Type.MYSQL)
-//    MyConectivity mcon;
+    @PersistenceUnit
+    public EntityManagerFactory emf;
+    public EntityManager em = emf.createEntityManager();
     
-    @PersistenceContext(unitName = "CISJPA")
-    public EntityManager em;
-
     MyConectivity mcon = new MysqlDbUtil();
     Connection conn = mcon.connectDB();
 
