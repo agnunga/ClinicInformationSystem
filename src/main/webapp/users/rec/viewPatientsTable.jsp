@@ -23,6 +23,7 @@
                         <th>DoB</th>
                         <th>Sex</th>
                         <th>Check in</th>
+                        <th>Registered by</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -45,6 +46,7 @@
                         <td><%=patient.getDob()%></td>
                         <td><%=patient.getSex()%></td>
                         <td><%=patient.getCheckin()%></td>
+                        <td><%=patient.getAddedBy()%></td>
                         <td>
                             <a href="/ClinicInformationSystem/receptionist/update_patient?id=<%=patient.getId()%>">
                                 <button class="btn btn-warning btn-xs icon-edit"> Edit </button>

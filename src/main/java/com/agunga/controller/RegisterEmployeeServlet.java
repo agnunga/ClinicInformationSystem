@@ -12,6 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 @WebServlet("admin/register_employee")
 public class RegisterEmployeeServlet extends HttpServlet {
@@ -29,7 +30,7 @@ public class RegisterEmployeeServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        HttpSession session = request.getSession(false);
         Employee emp = new Employee();
 
         emp.setName(request.getParameter("name"));
@@ -41,6 +42,7 @@ public class RegisterEmployeeServlet extends HttpServlet {
         emp.setDateEmployed(request.getParameter("dateEmployed"));
         emp.setSalary(request.getParameter("salary"));
         emp.setTitle(request.getParameter("title"));
+        emp.setAddedBy(session.getAttribute("asession").toString());
         //Encrypting password
         emp.setPassword(MyUtility.encryptPassword(request.getParameter("nationalId")));
         char t = emp.getTitle().charAt(0);

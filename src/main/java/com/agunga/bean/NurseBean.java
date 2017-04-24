@@ -1,7 +1,9 @@
 package com.agunga.bean;
- 
+
 import com.agunga.beanI.NurseBeanI;
+import com.agunga.model.Nurse;
 import com.agunga.model.Patient;
+import java.util.List;
 import javax.ejb.Stateless;
 
 /**
@@ -11,8 +13,23 @@ import javax.ejb.Stateless;
 public class NurseBean extends BaseBean implements NurseBeanI {
 
     @Override
-    public void dispatchDrugs(Patient patient) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Nurse add(Nurse nurse) {
+        return null;
+    }
+
+    @Override
+    public Patient dispatchDrugs(Patient patient) {
+        return patientBean.dispatchDrugs(patient);
+    }
+
+    @Override
+    public Patient viewPatient(long id) {
+        return patientBean.viewById(id);
+    }
+
+    @Override
+    public List<Patient> viewPatients() {
+        return patientBean.viewAll();
     }
 
 }

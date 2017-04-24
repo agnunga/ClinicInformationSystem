@@ -20,6 +20,7 @@
                     <th>Sex</th>
                     <th>Role</th>
                     <th>Date Employed</th>
+                    <th>Added By</th>
                 </tr>
             </thead>
             <tbody>  
@@ -41,6 +42,7 @@
                     <td><%=e.getSex()%></td>
                     <td><%=e.getTitle()%></td>
                     <td><%=e.getDateEmployed()%></td>
+                    <td><%=e.getAddedBy()%></td>
                     <td>
                         <a href="update_employee?id=<%=e.getId()%>">
                             <button class="btn btn-warning btn-xs icon-edit">Edit</button>

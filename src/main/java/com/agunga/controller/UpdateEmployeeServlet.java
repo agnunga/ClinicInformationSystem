@@ -58,7 +58,7 @@ public class UpdateEmployeeServlet extends HttpServlet {
             char t = emp.getTitle().charAt(0);
 
             if (employeeBean.update(emp) != null) {
-                request.setAttribute("updated", "Employee Updated Successfully.");
+            request.setAttribute("updated", emp.getName()+"("+emp.getNationalId()+") updated successfully.");
                 RequestDispatcher rd = request.getRequestDispatcher("/users/admin/viewEmployees.jsp");
                 rd.forward(request, response);
             } else {

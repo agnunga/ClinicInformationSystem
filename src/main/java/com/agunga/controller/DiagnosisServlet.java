@@ -29,7 +29,7 @@ public class DiagnosisServlet extends HttpServlet {
             RequestDispatcher rd = request.getRequestDispatcher("/users/doc/diagnose.jsp");
             rd.forward(request, response);
         } else {
-            request.setAttribute("updated", "Invalid Option. No record selected for update");
+            request.setAttribute("updated", "");
             RequestDispatcher rd = request.getRequestDispatcher("/users/doc/viewPatients.jsp");
             rd.forward(request, response);
         }
@@ -43,11 +43,12 @@ public class DiagnosisServlet extends HttpServlet {
         request.setAttribute("dbi", dbi);
 
         if (dbi.diagnose(patient) != null) {
-            request.setAttribute("updated", "Updated successfull.");
+            request.setAttribute("updated", "Diagnosis for "
+                    + patient.getName() + " (" + patient.getPatientId() + ") recorded successfully.");
             RequestDispatcher rd = request.getRequestDispatcher("/users/doc/viewPatients.jsp");
             rd.forward(request, response);
         } else {
-            request.setAttribute("updated", "Update failed.");
+            request.setAttribute("updated", "Diagnosis recording failed.");
             RequestDispatcher rd = request.getRequestDispatcher("/users/doc/viewPatients.jsp");
             rd.forward(request, response);
         }

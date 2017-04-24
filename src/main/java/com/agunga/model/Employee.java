@@ -19,6 +19,15 @@ public class Employee extends Person implements Serializable {
     private String dateEmployed;
     private String salary;
     private String title;
+    private String addedBy;
+
+    public String getAddedBy() {
+        return addedBy;
+    }
+
+    public void setAddedBy(String addedBy) {
+        this.addedBy = addedBy;
+    }
 
     public String getPassword() {
         return password;

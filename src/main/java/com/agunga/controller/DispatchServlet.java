@@ -1,6 +1,6 @@
 package com.agunga.controller;
 
-import com.agunga.beanI.ReceptionistBeanI;
+import com.agunga.beanI.NurseBeanI;
 import java.io.IOException;
 
 import javax.servlet.RequestDispatcher;
@@ -12,46 +12,46 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.agunga.model.Patient;
 import com.agunga.util.MyUtility;
+import java.sql.Time;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import javax.ejb.EJB;
 
 @WebServlet("/nurse/dispatch")
 public class DispatchServlet extends HttpServlet {
-
+    
     private static final long serialVersionUID = 1L;
     @EJB
-    ReceptionistBeanI rbi;
-
+    NurseBeanI nbi;
+    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setAttribute("rbi", rbi);
+        request.setAttribute("nbi", nbi);
         if (request.getParameter("id") != null) {
-            RequestDispatcher rd = request.getRequestDispatcher("/users/nurse/dispatchDrug.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("/users/nurse/dispatchDrugs.jsp");
             rd.forward(request, response);
         } else {
-            request.setAttribute("updated", "Invalid Option. No record selected for update");
+            request.setAttribute("updated", "");
             RequestDispatcher rd = request.getRequestDispatcher("/users/nurse/viewPatients.jsp");
             rd.forward(request, response);
         }
     }
-
+    
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
- 
-        Patient patient = rbi.viewPatient(MyUtility.myParseLong(request.getParameter("id")));
         
-        patient.setName(request.getParameter("name"));
-        patient.setNationalId(request.getParameter("nationalId"));
-        patient.setDob(request.getParameter("dob"));
-        patient.setPhone(request.getParameter("patient_phone"));
-        patient.setSex(request.getParameter("sex"));
-        patient.setPatientId(request.getParameter("patientId"));
-
-        if (rbi.updatePatient(patient) != null) {
-            request.setAttribute("updated", "Updated successfull.");
+        Patient patient = nbi.viewPatient(MyUtility.myParseLong(request.getParameter("id")));
+        
+        patient.setDrugs(request.getParameter("dispatch"));
+        patient.setCheckout(LocalDateTime.now());
+        request.setAttribute("nbi", nbi);
+        if (nbi.dispatchDrugs(patient) != null) {
+            request.setAttribute("updated", "Drugs dispatched to "
+                    + patient.getName() + " (" + patient.getPatientId() + ") and successfully recorded.");
             RequestDispatcher rd = request.getRequestDispatcher("/users/nurse/viewPatients.jsp");
             rd.forward(request, response);
         } else {
-            request.setAttribute("updated", "Update failed.");
+            request.setAttribute("updated", "Dispatch recording failed.");
             RequestDispatcher rd = request.getRequestDispatcher("/users/nurse/viewPatients.jsp");
             rd.forward(request, response);
         }

@@ -20,10 +20,14 @@
                         <!--<th>National ID</th>-->
                         <th>Patient ID</th>
                         <th>Name</th>
-                        <th>Phone</th>
+                        <!--<th>Phone</th>-->
                         <th>DoB</th>
                         <th>Sex</th>
                         <th>Check in</th>
+                        <th>Blood Type</th>
+                        <th>Weight</th>
+                        <th>Diagnosis</th>
+                        <th>Test Results</th> 
                     </tr>
                 </thead>
                 <tbody>
@@ -37,15 +41,20 @@
                         Iterator<Patient> iterator = patients.iterator();
                         while (iterator.hasNext()) {
                             Patient patient = iterator.next();
+                            if (patient.getPrescription() == null) {
                     %>
                     <tr>
                         <!--<td><%=patient.getNationalId()%></td>-->
                         <td><%=patient.getPatientId()%></td>
                         <td><%=patient.getName()%></td>
-                        <td><%=patient.getPhone()%></td>
+                        <!--<td><%=patient.getPhone()%></td>-->
                         <td><%=patient.getDob()%></td>
                         <td><%=patient.getSex()%></td>
                         <td><%=patient.getCheckin()%></td>
+                        <td><%=patient.getBloodType()%></td>
+                        <td><%=patient.getWeight()%></td>
+                        <td><%=patient.getDiagnosis()%></td>
+                        <td><%=patient.getTestResults()%></td>
                         <td>
                             <a href="/ClinicInformationSystem/doctor/diagnose?id=<%=patient.getId()%>">
                                 <button class="btn btn-warning btn-xs icon-edit"> Diagnose </button>
@@ -58,6 +67,7 @@
                         </td>
                     </tr>
                     <%
+                            }
                         }
                     %>
                 </tbody>

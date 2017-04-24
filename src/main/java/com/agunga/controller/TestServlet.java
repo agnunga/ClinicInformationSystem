@@ -1,6 +1,6 @@
 package com.agunga.controller;
 
-import com.agunga.beanI.ReceptionistBeanI;
+import com.agunga.beanI.LabtechBeanI;
 import java.io.IOException;
 
 import javax.servlet.RequestDispatcher;
@@ -19,16 +19,16 @@ public class TestServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
     @EJB
-    ReceptionistBeanI rbi;
+    LabtechBeanI lbi;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setAttribute("rbi", rbi);
+        request.setAttribute("lbi", lbi);
         if (request.getParameter("id") != null) {
             RequestDispatcher rd = request.getRequestDispatcher("/users/lab/test.jsp");
             rd.forward(request, response);
         } else {
-            request.setAttribute("updated", "Invalid Option. No record selected for update");
+            request.setAttribute("updated", "");
             RequestDispatcher rd = request.getRequestDispatcher("/users/lab/viewPatients.jsp");
             rd.forward(request, response);
         }
@@ -36,22 +36,22 @@ public class TestServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
- 
-        Patient patient = rbi.viewPatient(MyUtility.myParseLong(request.getParameter("id")));
-        
-        patient.setName(request.getParameter("name"));
-        patient.setNationalId(request.getParameter("nationalId"));
-        patient.setDob(request.getParameter("dob"));
-        patient.setPhone(request.getParameter("patient_phone"));
-        patient.setSex(request.getParameter("sex"));
-        patient.setPatientId(request.getParameter("patientId"));
 
-        if (rbi.updatePatient(patient) != null) {
-            request.setAttribute("updated", "Updated successfull.");
+        Patient patient = lbi.viewPatient(MyUtility.myParseLong(request.getParameter("id")));
+
+        patient.setWeight(request.getParameter("weight"));
+        patient.setBloodType(request.getParameter("blood"));
+        patient.setTestResults(request.getParameter("test"));
+
+        request.setAttribute("lbi", lbi);
+
+        if (lbi.test(patient) != null) {
+            request.setAttribute("updated", "Test result for "
+                    + patient.getName() + " (" + patient.getPatientId() + ") recorded successfully.");
             RequestDispatcher rd = request.getRequestDispatcher("/users/lab/viewPatients.jsp");
             rd.forward(request, response);
         } else {
-            request.setAttribute("updated", "Update failed.");
+            request.setAttribute("updated", "Test result recording failed.");
             RequestDispatcher rd = request.getRequestDispatcher("/users/lab/viewPatients.jsp");
             rd.forward(request, response);
         }

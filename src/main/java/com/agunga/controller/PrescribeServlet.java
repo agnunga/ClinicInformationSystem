@@ -1,7 +1,6 @@
 package com.agunga.controller;
 
 import com.agunga.beanI.DoctorBeanI;
-import com.agunga.beanI.ReceptionistBeanI;
 import java.io.IOException;
 
 import javax.servlet.RequestDispatcher;
@@ -29,7 +28,7 @@ public class PrescribeServlet extends HttpServlet {
             RequestDispatcher rd = request.getRequestDispatcher("/users/doc/prescribe.jsp");
             rd.forward(request, response);
         } else {
-            request.setAttribute("updated", "Invalid Option. No record selected for update");
+            request.setAttribute("updated", "");
             RequestDispatcher rd = request.getRequestDispatcher("/users/doc/viewPatients.jsp");
             rd.forward(request, response);
         }
@@ -43,11 +42,12 @@ public class PrescribeServlet extends HttpServlet {
         request.setAttribute("dbi", dbi);
 
         if (dbi.prescribe(patient) != null) {
-            request.setAttribute("updated", "Updated successfull.");
+            request.setAttribute("updated", "Drugs prescribed to "
+                    + patient.getName() + " (" + patient.getPatientId() + ") and successfully recorded.");
             RequestDispatcher rd = request.getRequestDispatcher("/users/doc/viewPatients.jsp");
             rd.forward(request, response);
         } else {
-            request.setAttribute("updated", "Update failed.");
+            request.setAttribute("updated", "Prescription recording failed ");
             RequestDispatcher rd = request.getRequestDispatcher("/users/doc/viewPatients.jsp");
             rd.forward(request, response);
         }

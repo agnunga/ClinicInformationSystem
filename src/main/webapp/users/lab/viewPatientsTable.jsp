@@ -1,6 +1,6 @@
+<%@page import="com.agunga.beanI.LabtechBeanI"%>
 <%@page import="com.agunga.util.MyUtility"%>
-<%@page import="com.agunga.model.Patient"%>
-<%@page import="com.agunga.beanI.ReceptionistBeanI"%>
+<%@page import="com.agunga.model.Patient"%> 
 <%@page import="java.util.List"%>  
 <%@page import="java.util.Iterator"%>
 <div class="col-xs-12">
@@ -21,7 +21,8 @@
                         <th>Name</th>
                         <th>Phone</th>
                         <th>DoB</th>
-                        <th>Sex</th>
+                        <!--<th>Sex</th>-->
+                        <th>Diagnosis</th>
                         <th>Check in</th>
                     </tr>
                 </thead>
@@ -31,32 +32,29 @@
                         if (request.getParameter("id") != null) {
                             id = request.getParameter("id");
                         }
-                        ReceptionistBeanI rbi = (ReceptionistBeanI) request.getAttribute("rbi");
-                        List<Patient> patients = rbi.viewPatients();
+                        LabtechBeanI lbi = (LabtechBeanI) request.getAttribute("lbi");
+                        List<Patient> patients = lbi.viewPatients();
                         Iterator<Patient> iterator = patients.iterator();
                         while (iterator.hasNext()) {
                             Patient patient = iterator.next();
+                            if (patient.getDiagnosis() != null && patient.getTestResults() == null) {
                     %>
                     <tr>
                         <td><%=patient.getNationalId()%></td>
                         <td><%=patient.getPatientId()%></td>
                         <td><%=patient.getName()%></td>
                         <td><%=patient.getPhone()%></td>
-                        <td><%=patient.getDob()%></td>
-                        <td><%=patient.getSex()%></td>
+                        <td><%=patient.getDob()%></td> 
+                        <td><%=patient.getDiagnosis()%></td>
                         <td><%=patient.getCheckin()%></td>
                         <td>
-                            <a href="/ClinicInformationSystem/receptionist/update_patient?id=<%=patient.getId()%>">
-                                <button class="btn btn-warning btn-xs icon-edit"> Edit </button>
+                            <a href="/ClinicInformationSystem/lab/test?id=<%=patient.getId()%>">
+                                <button class="btn btn-warning btn-xs icon-edit">Record test </button>
                             </a>
-                        </td>
-                        <td>
-                            <a href="/ClinicInformationSystem/receptionist/delete_patient?id=<%=patient.getId()%>">
-                                <button class="btn btn-danger btn-xs icon-edit"> Delete </button>
-                            </a>
-                        </td>
+                        </td> 
                     </tr>
                     <%
+                            }
                         }
                     %>
                 </tbody>

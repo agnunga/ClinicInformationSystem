@@ -36,7 +36,7 @@ public class UpdatePatientServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        request.setAttribute("rbi", rbi);
         Patient patient = rbi.viewPatient(MyUtility.myParseLong(request.getParameter("id")));
 
         patient.setName(request.getParameter("name"));
@@ -47,7 +47,7 @@ public class UpdatePatientServlet extends HttpServlet {
         patient.setPatientId(request.getParameter("patientId"));
 
         if (rbi.updatePatient(patient) != null) {
-            request.setAttribute("updated", "Updated successfull.");
+            request.setAttribute("updated", patient.getName()+"("+patient.getPatientId()+") updated successfully.");
             RequestDispatcher rd = request.getRequestDispatcher("/users/rec/viewPatients.jsp");
             rd.forward(request, response);
         } else {

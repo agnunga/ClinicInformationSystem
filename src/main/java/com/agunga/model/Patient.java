@@ -1,9 +1,8 @@
 package com.agunga.model;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue; 
-import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Table;
@@ -20,17 +19,33 @@ public class Patient extends Person implements Serializable {
 //    @Id
 //    @GeneratedValue //(strategy = GenerationType.AUTO);
 //    private long id; 
-    
     private String patientId;
-    private String checkin;
-    private String checkout;
+    private LocalDateTime checkin;
+    private LocalDateTime checkout;
     private String weight;
     private String diagnosis;
-    private String blood_type;
+    private String bloodType;
     private String prescription;
     private String drugs;
+    private String testResults;
+    private String addedBy;
 
-    
+    public String getAddedBy() {
+        return addedBy;
+    }
+
+    public void setAddedBy(String addedBy) {
+        this.addedBy = addedBy;
+    }
+
+    public String getTestResults() {
+        return testResults;
+    }
+
+    public void setTestResults(String TestResults) {
+        this.testResults = TestResults;
+    }
+
     public String getPatientId() {
         return patientId;
     }
@@ -39,19 +54,19 @@ public class Patient extends Person implements Serializable {
         this.patientId = patientId;
     }
 
-    public String getCheckin() {
+    public LocalDateTime getCheckin() {
         return checkin;
     }
 
-    public void setCheckin(String checkin) {
+    public void setCheckin(LocalDateTime checkin) {
         this.checkin = checkin;
     }
 
-    public String getCheckout() {
+    public LocalDateTime getCheckout() {
         return checkout;
     }
 
-    public void setCheckout(String checkout) {
+    public void setCheckout(LocalDateTime checkout) {
         this.checkout = checkout;
     }
 
@@ -71,12 +86,12 @@ public class Patient extends Person implements Serializable {
         this.diagnosis = diagnosis;
     }
 
-    public String getBlood_type() {
-        return blood_type;
+    public String getBloodType() {
+        return bloodType;
     }
 
-    public void setBlood_type(String blood_type) {
-        this.blood_type = blood_type;
+    public void setBloodType(String bloodType) {
+        this.bloodType = bloodType;
     }
 
     public String getPrescription() {
