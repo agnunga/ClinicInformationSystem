@@ -14,9 +14,9 @@ import javax.persistence.Table;
 /**
  * Created by agunga on 1/18/17.
  */
-@Entity
-@Inheritance(strategy = InheritanceType.JOINED)
-@Table(name = "receptionists")
+//@Entity
+//@Inheritance(strategy = InheritanceType.JOINED)
+//@Table(name = "receptionists")
 public class Receptionist extends Employee {
 
     private String assignment;

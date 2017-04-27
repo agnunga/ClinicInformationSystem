@@ -6,6 +6,7 @@ import javax.ejb.Stateless;
 import com.agunga.beanI.ReceptionistBeanI;
 import com.agunga.dao.ReceptionistDao;
 import java.util.List;
+import org.hibernate.Transaction;
 
 /**
  * Created by agunga on 1/18/17.
@@ -15,8 +16,15 @@ public class ReceptionistBean extends BaseBean implements ReceptionistBeanI {
 
     @Override
     public Receptionist add(Receptionist receptionist) {
-        ReceptionistDao rd = new ReceptionistDao(em);
-        return rd.save(receptionist);
+        Transaction t = session.beginTransaction();
+        try {
+            session.persist(receptionist);
+            t.commit();
+            return receptionist;
+        } catch (Exception e) {
+            t.rollback();
+            return null;
+        }
     }
 
     @Override
@@ -32,6 +40,11 @@ public class ReceptionistBean extends BaseBean implements ReceptionistBeanI {
     @Override
     public Patient viewPatient(long id) {
         return patientBean.viewById(id);
+    }
+
+    @Override
+    public List<Patient> viewByPatientId(String pid) {
+        return patientBean.viewByPatientId(pid);
     }
 
     @Override

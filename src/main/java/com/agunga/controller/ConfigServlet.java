@@ -1,7 +1,8 @@
 package com.agunga.controller;
-
+ 
 import com.agunga.db.ConnectionType;
 import com.agunga.db.MyConectivity;
+import com.trial.trials.ManageEmployee;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.inject.Inject;
@@ -13,21 +14,20 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
 
 @WebServlet("/config")
 public class ConfigServlet extends HttpServlet {
 
-    @Inject
-    @ConnectionType(ConnectionType.Type.MYSQL)
-    MyConectivity mconM;
-
-    @Inject
-    @ConnectionType(ConnectionType.Type.ORACLE)
-    MyConectivity mconO;
-    private static final long serialVersionUID = 1L;
+//    SessionFactory factory = HibernateUtils.getSessionFactory();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+//        ManageEmployee me = new ManageEmployee(factory);
+//        me.addEmployee();
+
         RequestDispatcher dispatcher = request.getRequestDispatcher("config.jsp");
         dispatcher.forward(request, response);
     }
@@ -35,15 +35,6 @@ public class ConfigServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         PrintWriter out = response.getWriter();
-        String db = (request.getParameter("db"));
 
-        ServletContext servletContext = getServletContext();
-
-        if ("o".equals(request.getParameter("db"))) {
-            servletContext.setAttribute("appCon", mconO);
-        } else if ("m".equals(request.getParameter("db"))) {
-            //ServletContect
-            servletContext.setAttribute("appCon", mconM);
-        }
     }
 }

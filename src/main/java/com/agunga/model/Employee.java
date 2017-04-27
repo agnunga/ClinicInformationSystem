@@ -4,14 +4,19 @@ import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 /**
  * Created by agunga on 1/18/17.
  */
-@Entity
-@Inheritance(strategy = InheritanceType.JOINED)
-@Table(name = "employees")
+//@NamedQueries({
+//    @NamedQuery(name = "findByEmployeeId", query = "SELECT e FROM Employee e WHERE e.employeeNo = :eId")
+//})
+//@Entity
+//@Inheritance(strategy = InheritanceType.JOINED)
+//@Table(name = "employees")
 public class Employee extends Person implements Serializable {
 
     private String employeeNo;

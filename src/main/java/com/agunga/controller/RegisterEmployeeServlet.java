@@ -42,7 +42,7 @@ public class RegisterEmployeeServlet extends HttpServlet {
         emp.setDateEmployed(request.getParameter("dateEmployed"));
         emp.setSalary(request.getParameter("salary"));
         emp.setTitle(request.getParameter("title"));
-        emp.setAddedBy(session.getAttribute("asession").toString());
+        emp.setAddedBy(session.getAttribute("asession") == null ? "" : session.getAttribute("asession").toString());
         //Encrypting password
         emp.setPassword(MyUtility.encryptPassword(request.getParameter("nationalId")));
         char t = emp.getTitle().charAt(0);

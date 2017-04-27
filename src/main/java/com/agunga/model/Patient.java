@@ -5,15 +5,20 @@ import java.time.LocalDateTime;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 
 /**
  * Created by agunga on 1/18/17.
  */
-@Entity
-@Inheritance(strategy = InheritanceType.JOINED)
-@Table(name = "patients")
+//@NamedQueries({
+//    @NamedQuery(name = "findPatientById", query = "SELECT p FROM Patient p WHERE p.patientId = :pid")
+//})
+//
+//@Entity
+//@Inheritance(strategy = InheritanceType.JOINED)
+//@Table(name = "patients")
 public class Patient extends Person implements Serializable {
 
 //    @Id

@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.agunga.model.Patient;
 import com.agunga.util.MyUtility;
+import java.util.List;
 import javax.ejb.EJB;
 
 @WebServlet("/receptionist/delete_patient")
@@ -24,7 +25,8 @@ public class DeletePatientServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setAttribute("rbi", rbi);
+        List<Patient> patients = rbi.viewPatients();
+        request.setAttribute("patients", patients);
 
         if (request.getParameter("id") != null) {
             if (rbi.deletePatient(MyUtility.myParseLong(request.getParameter("id")))) {

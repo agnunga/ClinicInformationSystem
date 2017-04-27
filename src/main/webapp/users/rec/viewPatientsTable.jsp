@@ -1,15 +1,26 @@
 <%@page import="com.agunga.util.MyUtility"%>
-<%@page import="com.agunga.model.Patient"%>
-<%@page import="com.agunga.beanI.ReceptionistBeanI"%>
+<%@page import="com.agunga.model.Patient"%> 
 <%@page import="java.util.List"%>  
 <%@page import="java.util.Iterator"%>
 <div class="col-xs-12">
+
+    <form class="well form-inline" action="view_patients" method="post" id="contact_form">
+        <fieldset> 
+            <div class="input-group" style="text-align: right;"> 
+                <label class="control-label">Search by Patient ID: </label>  
+                <input name="patientId" placeholder="Patient ID" class="form-control" type="text" required maxlength="10">
+                <!--<button type="submit" class="btn btn-warning"><span class="glyphicon glyphicon-search"> </span></button>-->
+            </div> 
+        </fieldset>
+    </form> 
+
     <div class="box">
         <h3>
             <%= ((request.getAttribute("updated") != null) ? request.getAttribute("updated") + " " : "")%>
+            <%= ((request.getAttribute("message") != null) ? request.getAttribute("message") + " " : "")%>
         </h3>
         <div class="box-header">
-            <h3 class="box-title">Patient Details</h3>
+            <!--<h3 class="box-title">Patient Details</h3>-->
         </div>
         <!-- /.box-header -->
         <div class="box-body">
@@ -28,12 +39,7 @@
                 </thead>
                 <tbody>
                     <%
-                        String id = "";
-                        if (request.getParameter("id") != null) {
-                            id = request.getParameter("id");
-                        }
-                        ReceptionistBeanI rbi = (ReceptionistBeanI) request.getAttribute("rbi");
-                        List<Patient> patients = rbi.viewPatients();
+                        List<Patient> patients = (List) request.getAttribute("patients");
                         Iterator<Patient> iterator = patients.iterator();
                         while (iterator.hasNext()) {
                             Patient patient = iterator.next();

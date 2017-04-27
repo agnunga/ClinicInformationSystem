@@ -5,24 +5,24 @@
 
 <%
     DoctorBeanI dbi = (DoctorBeanI) request.getAttribute("dbi");
-    Patient employee = dbi.viewPatient(MyUtility.myParseLong(request.getParameter("id")));
+    Patient patient = dbi.viewPatient(MyUtility.myParseLong(request.getParameter("id")));
 %>
 <form class="well form-horizontal" action="diagnose" method="post" id="contact_form">
     <fieldset>  
         <legend>Record diagnosis</legend> 
         Full name: 
-        <%= employee.getName()%> 
+        <%= patient.getName()%> 
         Patient ID: 
-        <%= employee.getPatientId()%>
+        <%= patient.getPatientId()%>
         National ID: 
-        <%= employee.getNationalId()%> 
+        <%= patient.getNationalId()%> 
         Phone: 
-        <%= employee.getPhone()%>
+        <%= patient.getPhone()%>
         Gender:
-        <%= employee.getSex()%>
+        <%= patient.getSex()%>
         Date Of Birth: 
-        <%= employee.getDob()%>
-        <input name="id" value="<%= employee.getId()%>"type="hidden" required>
+        <%= patient.getDob()%>
+        <input name="id" value="<%= patient.getId()%>"type="hidden" required>
         <div class="form-group">
             <label class="control-label">Diagnosis</label><br/>
             <div class="input-group">

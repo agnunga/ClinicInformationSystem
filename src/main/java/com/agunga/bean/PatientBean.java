@@ -11,33 +11,33 @@ public class PatientBean extends BaseBean implements PatientBeanI {
 
     @Override
     public Patient add(Patient patient) {
-        PatientDao pd = new PatientDao(em);
-        return pd.save(patient);
+        return null;
     }
 
     @Override
     public List<Patient> viewAll() {
-        PatientDao pd = new PatientDao(em);
-        return pd.findAll();
+        return null;
     }
 
     @Override
     public Patient viewById(long id) {
-        PatientDao pd = new PatientDao(em);
-        return pd.findById(id);
+        return null;
+    }
+
+    @Override
+    public List<Patient> viewByPatientId(String pid) {
+        return null;
     }
 
     @Override
     public Patient update(Patient patient) {
-        PatientDao pd = new PatientDao(em);
-        return pd.merge(patient);
+        return null;
     }
 
     @Override
     public boolean delete(long id) {
-        PatientDao pd = new PatientDao(em);
-        Patient patient = pd.findById(id);
-        return pd.remove(patient);
+        session.delete(id);
+        return true;
     }
 
     @Override

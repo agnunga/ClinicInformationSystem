@@ -9,9 +9,9 @@ import javax.persistence.Table;
 /**
  * Created by agunga on 1/18/17.
  */
-@Entity 
-@Inheritance(strategy = InheritanceType.JOINED)
-@Table(name = "administrators")
+//@Entity 
+//@Inheritance(strategy = InheritanceType.JOINED)
+//@Table(name = "administrators")
 public class Administrator extends Employee implements Serializable {
 
     private String adminId;

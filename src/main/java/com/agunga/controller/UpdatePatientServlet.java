@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.agunga.model.Patient;
 import com.agunga.util.MyUtility;
+import java.util.List;
 import javax.ejb.EJB;
 
 @WebServlet("/receptionist/update_patient")
@@ -23,7 +24,11 @@ public class UpdatePatientServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setAttribute("rbi", rbi);
+        request.setAttribute("rbi", rbi);//remove
+        
+        List<Patient> patients = rbi.viewPatients();
+        request.setAttribute("patients", patients);
+
         if (request.getParameter("id") != null) {
             RequestDispatcher rd = request.getRequestDispatcher("/users/rec/updatePatient.jsp");
             rd.forward(request, response);
@@ -36,7 +41,11 @@ public class UpdatePatientServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setAttribute("rbi", rbi);
+        request.setAttribute("rbi", rbi);//remove
+        
+        List<Patient> patients = rbi.viewPatients();
+        request.setAttribute("patients", patients);
+        
         Patient patient = rbi.viewPatient(MyUtility.myParseLong(request.getParameter("id")));
 
         patient.setName(request.getParameter("name"));
@@ -47,7 +56,7 @@ public class UpdatePatientServlet extends HttpServlet {
         patient.setPatientId(request.getParameter("patientId"));
 
         if (rbi.updatePatient(patient) != null) {
-            request.setAttribute("updated", patient.getName()+"("+patient.getPatientId()+") updated successfully.");
+            request.setAttribute("updated", patient.getName() + "(" + patient.getPatientId() + ") updated successfully.");
             RequestDispatcher rd = request.getRequestDispatcher("/users/rec/viewPatients.jsp");
             rd.forward(request, response);
         } else {

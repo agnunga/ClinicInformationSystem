@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" 
+"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/CISJPA</property>
+        <property name="hibernate.connection.username">root</property>
+        <!--
+        <property name="hibernate.connection.driver_class">oracle.jdbc.driver.OracleDriver</property>
+        <property name="hibernate.connection.url">jdbc:oracle:thin:localhost:1521:orcl</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</property>
+        <property name="hibernate.connection.username">SYSTEM</property>
+        -->
+        <property name="hibernate.connection.password">pwd</property>
+        <property name="hibernate.hbm2ddl.auto">create</property>
+        <property name="hibernate.show_sql">true</property>
+        <!--    
+        <mapping class="com.agunga.model.Person"/>
+        <mapping class="com.agunga.model.Patient"/>
+        <mapping class="com.agunga.model.Employee"/>
+        <mapping class="com.agunga.model.Administrator"/>
+        <mapping class="com.agunga.model.Receptionist"/>
+        <mapping class="com.agunga.model.Doctor"/>
+        <mapping class="com.agunga.model.Nurse"/>
+        <mapping class="com.agunga.model.Labtech"/>
+        -->
+        <mapping resource="Person.hbm.xml"/>
+        <!--        
+        <mapping resource="Patient.hbm.xml"/>
+        <mapping resource="Employee.hbm.xml"/>
+        <mapping resource="Nurse.hbm.xml"/>
+        <mapping resource="Receptionist.hbm.xml"/>
+        <mapping resource="Doctor.hbm.xml"/>
+        <mapping resource="Labtech.hbm.xml"/>
+        <mapping resource="Administrator.hbm.xml"/>
+        -->
+    </session-factory>
+</hibernate-configuration>

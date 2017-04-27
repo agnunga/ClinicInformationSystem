@@ -9,9 +9,9 @@ import javax.persistence.Table;
 /**
  * Created by agunga on 1/18/17.
  */
-@Entity
-@Inheritance(strategy = InheritanceType.JOINED)
-@Table(name = "doctors")
+//@Entity
+//@Inheritance(strategy = InheritanceType.JOINED)
+//@Table(name = "doctors")
 public class Doctor extends Employee implements Serializable {
 
     private String licence_no;

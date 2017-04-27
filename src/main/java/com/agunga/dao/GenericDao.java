@@ -1,11 +1,11 @@
 package com.agunga.dao;
 
-import com.agunga.util.JLogger;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceException;
 import java.io.Serializable;
 import java.util.List;
-import javax.persistence.EntityTransaction;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Created by Administrator on 3/23/2017.
@@ -15,59 +15,47 @@ import javax.persistence.EntityTransaction;
  */
 public class GenericDao<T, PK extends Serializable> implements GenericDaoI<T, PK> {
 
+    private Logger logger;
     private Class<T> entityClass;
     private EntityManager entityManager;
-    private JLogger jLogger;
 
     public GenericDao(Class<T> entityClass, EntityManager entityManager) {
+        this.logger = LoggerFactory.getLogger(entityClass);
         this.entityClass = entityClass;
         this.entityManager = entityManager;
-        this.jLogger = new JLogger(entityClass);
+        this.logger = null;//new (entityClass);
     }
 
     @Override
     public T save(T t) {
-        EntityTransaction et = entityManager.getTransaction();
         try {
-            et.begin();
             this.entityManager.persist(t);
-            et.commit();
+            logger.info("sucess");
             return t;
-
-        } catch (Exception ep) {
-            et.rollback();
-            jLogger.e(ep);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
             return null;
         } finally {
-            entityManager.close();
         }
     }
 
     @Override
     public T findById(PK id) {
-        EntityTransaction et = entityManager.getTransaction();
         try {
-            et.begin();
             return this.entityManager.find(entityClass, id);
-//            et.commit();
         } catch (PersistenceException pe) {
-            et.rollback();
-            jLogger.e(pe.getMessage());
+            logger.error(pe.getMessage());
             return null;
         }
     }
 
     @Override
     public T merge(T t) {
-        EntityTransaction et = entityManager.getTransaction();
         try {
-            et.begin();
             this.entityManager.merge(t);
-            et.commit();
             return t;
         } catch (Exception pe) {
-            et.rollback();
-            jLogger.e(pe.getMessage());
+            logger.error(pe.getMessage());
             return null;
         }
     }
@@ -79,17 +67,19 @@ public class GenericDao<T, PK extends Serializable> implements GenericDaoI<T, PK
 
     @Override
     public boolean remove(T t) {
-        EntityTransaction et = entityManager.getTransaction();
         try {
-            et.begin();
             t = this.entityManager.merge(t);
             this.entityManager.remove(t);
-//            this.entityManager.getTransaction().commit();
             return true;
         } catch (Exception pe) {
-            et.rollback();
-            jLogger.e(pe.getMessage());
+            logger.error(pe.getMessage());
             return false;
         }
+    }
+
+    public List<T> processJPQL(String jpql, String paramName, String paramValue) {
+        return this.entityManager.createNamedQuery(jpql)
+                .setParameter(paramName, paramValue)
+                .getResultList();
     }
 }

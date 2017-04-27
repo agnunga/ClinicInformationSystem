@@ -1,7 +1,6 @@
 package com.agunga.controller;
 
 import com.agunga.beanI.DoctorBeanI;
-import com.agunga.beanI.ReceptionistBeanI;
 import java.io.IOException;
 
 import javax.servlet.RequestDispatcher;

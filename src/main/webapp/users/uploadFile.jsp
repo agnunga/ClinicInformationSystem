@@ -1,4 +1,4 @@
-<%@include file="header.jsp"%> 
+<%@include file="../assets/header.jsp"%> 
 <form class="well form-horizontal" action="upload_file" method="post" enctype="multipart/form-data"
       id="contact_form" style="max-width: 500px; margin: 50px auto auto auto;">
     <fieldset>

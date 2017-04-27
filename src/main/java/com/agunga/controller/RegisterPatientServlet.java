@@ -38,7 +38,7 @@ public class RegisterPatientServlet extends HttpServlet {
         patient.setPhone(request.getParameter("patient_phone"));
         patient.setSex(request.getParameter("sex"));
         patient.setCheckin(LocalDateTime.now());
-        patient.setAddedBy(session.getAttribute("rsession").toString());
+        patient.setAddedBy(session.getAttribute("rsession") == null ? "" : session.getAttribute("rsession").toString());
 
         patient.setPatientId(request.getParameter("patientId"));
 

@@ -1,6 +1,6 @@
 package com.agunga.model;
 
-import javax.annotation.Generated;
+import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -11,13 +11,13 @@ import javax.persistence.Table;
 /**
  * Created by agunga on 1/18/17.
  */
-@Entity
-@Inheritance(strategy = InheritanceType.JOINED)
-@Table(name = "persons")
-public class Person {
+//@Entity
+//@Inheritance(strategy = InheritanceType.JOINED)
+//@Table(name = "persons")
+public class Person implements Serializable {
 
-    @Id
-    @GeneratedValue
+//    @Id
+//    @GeneratedValue
     private long id;
     private String nationalId;
     private String name;
@@ -32,7 +32,7 @@ public class Person {
     public void setId(long id) {
         this.id = id;
     }
-    
+
     public String getNationalId() {
         return nationalId;
     }

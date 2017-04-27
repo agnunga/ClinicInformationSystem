@@ -6,7 +6,9 @@
 package com.agunga.controller;
 
 import com.agunga.beanI.ReceptionistBeanI;
+import com.agunga.model.Patient;
 import java.io.IOException;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -27,9 +29,18 @@ public class ReceptionistStartServlet extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession(false);
         if (session != null && !session.isNew() && session.getAttribute("rsession") != null) {
-            request.setAttribute("rbi", rbi);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/users/rec/receptionist.jsp");
-            dispatcher.forward(request, response);
+            List<Patient> patients = rbi.viewPatients();
+            request.setAttribute("patients", patients);
+
+            if (patients != null && patients.size() > 0) {
+                request.setAttribute("message", "All patients");
+                RequestDispatcher rd = request.getRequestDispatcher("/users/rec/viewPatients.jsp");
+                rd.forward(request, response);
+            } else {
+                request.setAttribute("message", "No patients found.");
+                RequestDispatcher rd = request.getRequestDispatcher("/users/rec/viewPatients.jsp");
+                rd.forward(request, response);
+            }
         } else {
             RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
             dispatcher.forward(request, response);

@@ -13,6 +13,8 @@ public interface PatientBeanI {
 
     public Patient viewById(long id);
 
+    public List<Patient> viewByPatientId(String pid);
+
     public Patient update(Patient patient);
 
     public boolean delete(long id);

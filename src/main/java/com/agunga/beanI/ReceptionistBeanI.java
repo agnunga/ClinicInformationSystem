@@ -17,6 +17,8 @@ public interface ReceptionistBeanI {
 
     public Patient viewPatient(long id);
 
+    public List<Patient> viewByPatientId(String pid);
+
     public Patient updatePatient(Patient patient);
 
     public boolean deletePatient(long id);

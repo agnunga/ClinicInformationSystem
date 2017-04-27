@@ -8,9 +8,9 @@ import javax.persistence.Table;
 /**
  * Created by agunga on 1/18/17.
  */
-@Entity
-@Inheritance(strategy = InheritanceType.JOINED)
-@Table(name = "nurses")
+//@Entity
+//@Inheritance(strategy = InheritanceType.JOINED)
+//@Table(name = "nurses")
 public class Nurse extends Employee {
 
     private String nurseId;
